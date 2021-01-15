@@ -14,10 +14,11 @@ class Intensity {
 
   Map<String, dynamic> toMap() {
     return {
-      // 'from': from?.millisecondsSinceEpoch,
-      // 'to': to?.millisecondsSinceEpoch,
+      'from': from.toIso8601String(),
+      'to': to.toIso8601String(),
       'forecast': forecast,
       'actual': actual,
+      'index': intensityIndexAsString
     };
   }
 
@@ -25,14 +26,19 @@ class Intensity {
     if (map == null) return null;
 
     return Intensity(
-      // from: DateTime.fromMillisecondsSinceEpoch(map['from']),
-      // to: DateTime.fromMillisecondsSinceEpoch(map['to']),
+      from: DateTime.parse(map['data'][0]['from']),
+      to: DateTime.parse(map['data'][0]['to']),
       forecast: map['data'][0]['intensity']['forecast'],
       actual: map['data'][0]['intensity']['actual'],
       intensityIndex:
           convertStringToIntensityIndex(map['data'][0]['intensity']['index']),
     );
   }
+
+  String toJson() => json.encode(toMap());
+
+  factory Intensity.fromJson(String source) =>
+      Intensity.fromMap(json.decode(source));
 
   // Function to convert a string from the api into a IntensityIndex enum
   // This may seem unneccesary but might make it easier to work with
@@ -61,13 +67,9 @@ class Intensity {
     }
   }
 
-  String toJson() => json.encode(toMap());
-
-  factory Intensity.fromJson(String source) =>
-      Intensity.fromMap(json.decode(source));
-
   // Getter to turn IntensityIndex enum into a string
-  String get intensityIndexString {
+  // Needed to toMap function and likely for the UI
+  String get intensityIndexAsString {
     switch (intensityIndex) {
       case IntensityIndex.VeryLow:
         return 'very low';

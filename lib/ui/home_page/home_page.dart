@@ -24,9 +24,11 @@ class _HomePageState extends State<HomePage> {
                 child: Column(
                   children: [
                     Text('Returned Data'),
+                    Text('Forecast From: ${intensity.from}'),
+                    Text('Forecast To: ${intensity.to}'),
                     Text('Forecast intensity: ${intensity.forecast}'),
                     Text('Actual intensity: ${intensity.actual}'),
-                    Text('Index: ${intensity.intensityIndexString}'),
+                    Text('Index: ${intensity.intensityIndexAsString}'),
                   ],
                 ),
               );
