@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:enviro_app/data/models/statistics.dart';
 import '../../../data/models/intensity.dart';
 import '../../../data/repositories/intensity_repository.dart';
 import 'package:meta/meta.dart';
@@ -12,9 +13,11 @@ class IntensityCubit extends Cubit<IntensityState> {
   void loadNationalIntensityData() async {
     emit(IntensityFetchInProgress());
     final intensity = await repo.getNationalIntesity();
+    final intensityStats = await repo.get24hrNationalStatistics();
     emit(
       IntensityFetchSuccess(
         intensity: intensity,
+        intensityStatistics: intensityStats,
       ),
     );
   }

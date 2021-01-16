@@ -11,10 +11,16 @@ class Intensity {
   int actual;
   IntensityIndex intensityIndex;
 
-  Intensity(
-      {this.from, this.to, this.forecast, this.actual, this.intensityIndex});
+  Intensity({
+    this.from,
+    this.to,
+    this.forecast,
+    this.actual,
+    this.intensityIndex,
+  });
 
   Map<String, dynamic> toMap() {
+    //! This will not work
     return {
       'from': from.toIso8601String(),
       'to': to.toIso8601String(),

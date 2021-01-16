@@ -1,26 +1,47 @@
+import 'package:enviro_app/business_logic/cubits/cubit/intensity_cubit.dart';
 import 'package:enviro_app/constants/functions.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class IntensityPageStats extends StatelessWidget {
+class IntensityPageStats extends StatefulWidget {
+  @override
+  _IntensityPageStatsState createState() => _IntensityPageStatsState();
+}
+
+class _IntensityPageStatsState extends State<IntensityPageStats> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<IntensityCubit>().loadNationalIntensityData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          SingleStatistic(
-            value: 219,
-            label: 'average',
-          ),
-          SingleStatistic(
-            value: 303,
-            label: 'max',
-          ),
-          SingleStatistic(
-            value: 103,
-            label: 'min',
-          ),
-        ],
+      child: BlocBuilder<IntensityCubit, IntensityState>(
+        builder: (context, state) {
+          if (state is IntensityFetchSuccess) {
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                SingleStatistic(
+                  value: state.intensityStatistics.average,
+                  label: 'average',
+                ),
+                SingleStatistic(
+                  value: state.intensityStatistics.max,
+                  label: 'max',
+                ),
+                SingleStatistic(
+                  value: state.intensityStatistics.min,
+                  label: 'min',
+                ),
+              ],
+            );
+          } else {
+            return Container();
+          }
+        },
       ),
     );
   }
