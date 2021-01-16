@@ -5,18 +5,11 @@ import 'package:meta/meta.dart';
 
 part 'intensity_state.dart';
 
-// Incoming event (or in cubit case a function)
-// - Get data
-
-// Out going is the state (which is the data)
-
 class IntensityCubit extends Cubit<IntensityState> {
-  // instantiate the repo inside this class, although might be better to
-  // pass it into the constructor
-  final IntensityRepository repo = IntensityRepository();
-  IntensityCubit() : super(IntensityInitial());
+  final IntensityRepository repo;
+  IntensityCubit({@required this.repo}) : super(IntensityInitial());
 
-  void reloadData() async {
+  void loadNationalIntensityData() async {
     emit(IntensityFetchInProgress());
     final intensity = await repo.getNationalIntesity();
     emit(

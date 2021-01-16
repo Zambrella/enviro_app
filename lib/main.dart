@@ -1,4 +1,5 @@
 import 'package:enviro_app/constants/ui_constants.dart';
+import 'package:enviro_app/data/repositories/intensity_repository.dart';
 import 'package:enviro_app/ui/theme/text_theme.dart';
 
 import 'business_logic/cubits/cubit/intensity_cubit.dart';
@@ -20,7 +21,8 @@ class MyApp extends StatelessWidget {
         textTheme: kTextTheme,
       ),
       home: BlocProvider(
-        create: (context) => IntensityCubit(),
+        //* Could also load the initial data here: `IntensityCubit()..loadData()`
+        create: (context) => IntensityCubit(repo: IntensityRepository()),
         child: HomePage(),
       ),
     );
