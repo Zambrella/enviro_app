@@ -1,3 +1,4 @@
+import 'package:enviro_app/constants/functions.dart';
 import 'package:flutter/material.dart';
 
 class IntensityPageStats extends StatelessWidget {
@@ -38,7 +39,10 @@ class SingleStatistic extends StatelessWidget {
       children: [
         Text(
           value.toString(),
-          style: Theme.of(context).textTheme.headline5,
+          style: Theme.of(context)
+              .textTheme
+              .headline5
+              .copyWith(color: UIFunctions.getColor(value)),
         ),
         Text(
           label,

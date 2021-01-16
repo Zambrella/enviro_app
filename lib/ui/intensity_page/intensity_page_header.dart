@@ -1,7 +1,8 @@
-import 'package:enviro_app/constants/ui_constants.dart';
+import 'package:enviro_app/constants/functions.dart';
 import 'package:flutter/material.dart';
 
 class IntensityPageHeader extends StatelessWidget {
+  final int value = 284;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -14,9 +15,9 @@ class IntensityPageHeader extends StatelessWidget {
               style: Theme.of(context).textTheme.subtitle1,
             ),
             Text(
-              '284',
+              value.toString(),
               style: Theme.of(context).textTheme.headline4.copyWith(
-                    color: kWarningColor,
+                    color: UIFunctions.getColor(value),
                     height: 1.0,
                   ),
             ),
