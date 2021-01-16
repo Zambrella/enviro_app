@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:enviro_app/constants/functions.dart';
+
 import '../../constants/enums.dart';
 
 class Intensity {
@@ -18,7 +20,7 @@ class Intensity {
       'to': to.toIso8601String(),
       'forecast': forecast,
       'actual': actual,
-      'index': intensityIndexAsString
+      'index': IndexHelper.intensityIndexAsString
     };
   }
 
@@ -30,8 +32,8 @@ class Intensity {
       to: DateTime.parse(map['data'][0]['to']),
       forecast: map['data'][0]['intensity']['forecast'],
       actual: map['data'][0]['intensity']['actual'],
-      intensityIndex:
-          convertStringToIntensityIndex(map['data'][0]['intensity']['index']),
+      intensityIndex: IndexHelper.convertStringToIntensityIndex(
+          map['data'][0]['intensity']['index']),
     );
   }
 
@@ -39,59 +41,4 @@ class Intensity {
 
   factory Intensity.fromJson(String source) =>
       Intensity.fromMap(json.decode(source));
-
-  // Function to convert a string from the api into a IntensityIndex enum
-  // This may seem unneccesary but might make it easier to work with
-  static IntensityIndex convertStringToIntensityIndex(String input) {
-    // API sends them as lower case but just in case it changes
-    var index = input.toLowerCase();
-    switch (index) {
-      case 'very low':
-        return IntensityIndex.VeryLow;
-        break;
-      case 'low':
-        return IntensityIndex.Low;
-        break;
-      case 'moderate':
-        return IntensityIndex.Moderate;
-        break;
-      case 'high':
-        return IntensityIndex.High;
-        break;
-      case 'very high':
-        return IntensityIndex.VeryHigh;
-        break;
-      default:
-        return IntensityIndex.Unknown;
-        break;
-    }
-  }
-
-  // Getter to turn IntensityIndex enum into a string
-  // Needed to toMap function and likely for the UI
-  String get intensityIndexAsString {
-    switch (intensityIndex) {
-      case IntensityIndex.VeryLow:
-        return 'very low';
-        break;
-      case IntensityIndex.Low:
-        return 'low';
-        break;
-      case IntensityIndex.Moderate:
-        return 'moderate';
-        break;
-      case IntensityIndex.High:
-        return 'high';
-        break;
-      case IntensityIndex.VeryHigh:
-        return 'very high';
-        break;
-      case IntensityIndex.Unknown:
-        return 'unknown';
-        break;
-      default:
-        return 'unknown';
-        break;
-    }
-  }
 }

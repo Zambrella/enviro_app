@@ -20,6 +20,7 @@ class _IntensityPageHeaderState extends State<IntensityPageHeader>
     context.read<IntensityCubit>().loadNationalIntensityData();
     _textAnimationController = AnimationController(
         vsync: this, duration: Duration(milliseconds: 1000));
+    // End value doesn't really matter here
     _intTween = IntTween(begin: 0, end: 1);
     _textAnimation = _intTween.animate(_textAnimationController);
   }
