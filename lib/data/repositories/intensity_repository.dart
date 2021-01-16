@@ -6,7 +6,7 @@ class IntensityRepository {
 
   Future<Intensity> getNationalIntesity() async {
     try {
-      await Future.delayed(Duration(seconds: 2));
+      // await Future.delayed(Duration(seconds: 2));
       String rawData = await api.getNationalIntesity();
       Intensity intensity = Intensity.fromJson(rawData);
       return intensity;
