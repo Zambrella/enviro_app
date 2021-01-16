@@ -1,7 +1,7 @@
 import 'package:enviro_app/constants/ui_constants.dart';
 import 'package:flutter/material.dart';
 
-class HomePageHeader extends StatelessWidget {
+class IntensityPageHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
