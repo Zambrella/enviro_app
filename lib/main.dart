@@ -11,7 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 void main() async {
   IntensityRepository intensityRepository = IntensityRepository();
   var response = await intensityRepository.getTimeSections();
-  print('First time section: ${response[0]}');
+  print('First time section: ${response[0].intensityAverage}');
   runApp(MyApp());
 }
 

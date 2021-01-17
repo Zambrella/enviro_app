@@ -53,7 +53,7 @@ class IntensityRepository {
     var now = DateTime.now();
     List<TimeSection> timeSections = [];
     try {
-      for (var i = 0; i <= 46; i += 2) {
+      for (var i = 0; i <= 48; i += 2) {
         // Get earliest time period
         var beginTime = now.add(Duration(hours: i));
 

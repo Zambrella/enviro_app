@@ -13,4 +13,14 @@ class TimeSection {
   @override
   String toString() =>
       'TimeSection(intensities: $intensities, to: $to, from: $from)';
+
+  int get intensityAverage {
+    var sum = 0;
+    var count = 0;
+    for (var intensity in intensities) {
+      sum += intensity.forecast;
+      count++;
+    }
+    return (sum / count).round();
+  }
 }
