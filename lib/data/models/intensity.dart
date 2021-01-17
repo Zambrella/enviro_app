@@ -43,8 +43,10 @@ class Intensity {
     );
   }
 
+  // Not used
   String toJson() => json.encode(toMap());
 
+  // No used
   factory Intensity.fromJson(String source) =>
       Intensity.fromMap(json.decode(source));
 }

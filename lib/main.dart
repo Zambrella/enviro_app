@@ -9,9 +9,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() async {
-  // IntensityApi intensityApi = IntensityApi();
-  // var response = intensityApi.get48hrNationalIntensity();
-  // print(response);
+  // IntensityRepository intensityRepository = IntensityRepository();
+  // var response = await intensityRepository.get48hrNationalIntensity();
+  // print(response[0].forecast);
   runApp(MyApp());
 }
 

@@ -13,7 +13,7 @@ class IntensityCubit extends Cubit<IntensityState> {
   void loadNationalIntensityData() async {
     emit(IntensityFetchInProgress());
     final intensity = await repo.getNationalIntesity();
-    final intensityStats = await repo.get24hrNationalStatistics();
+    final intensityStats = await repo.get48hrNationalStatistics();
     emit(
       IntensityFetchSuccess(
         intensity: intensity,

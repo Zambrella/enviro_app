@@ -19,7 +19,7 @@ class IntensityRepository {
     }
   }
 
-  Future<IntensityStatistics> get24hrNationalStatistics() async {
+  Future<IntensityStatistics> get48hrNationalStatistics() async {
     try {
       String rawData = await api.get48hrNationalStatistics();
       Map<String, dynamic> decoded = jsonDecode(rawData)['data'][0];
@@ -30,11 +30,17 @@ class IntensityRepository {
     }
   }
 
-  // Future<List<Intensity>> get48hrNationalIntensity() async {
-  //   try {
-  //     String rawData = await api.get48hrNationalIntensity();
-  //   } catch (e) {
-  //     throw Exception('Error: $e');
-  //   }
-  // }
+  Future<List<Intensity>> get48hrNationalIntensity() async {
+    try {
+      String rawData = await api.get48hrNationalIntensity();
+      var decoded = jsonDecode(rawData)['data'];
+      List<Intensity> intensityList = [];
+      decoded.forEach((element) {
+        intensityList.add(Intensity.fromMap(element));
+      });
+      return intensityList;
+    } catch (e) {
+      throw Exception('Error: $e');
+    }
+  }
 }
