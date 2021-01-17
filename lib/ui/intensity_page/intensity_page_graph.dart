@@ -1,98 +1,46 @@
+import 'package:enviro_app/business_logic/cubits/cubit/intensity_cubit.dart';
 import 'package:enviro_app/constants/ui_constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class IntensityPageGraph extends StatelessWidget {
+class IntensityPageGraph extends StatefulWidget {
+  @override
+  _IntensityPageGraphState createState() => _IntensityPageGraphState();
+}
+
+class _IntensityPageGraphState extends State<IntensityPageGraph> {
   static const _totalHeight = 350.0;
   static const _barWidth = 32.0;
-  final List<GraphBar> _backgroundBars = [
-    GraphBar(
-      barHeight: _totalHeight,
-      barWidth: _barWidth,
-      dateTime: DateTime.now(),
-      primaryBarHeight: 200,
-      hasReminder: false,
-    ),
-    GraphBar(
-      barHeight: _totalHeight,
-      barWidth: _barWidth,
-      dateTime: DateTime.now().add(Duration(hours: 2)),
-      primaryBarHeight: 100,
-      hasReminder: true,
-    ),
-    GraphBar(
-      barHeight: _totalHeight,
-      barWidth: _barWidth,
-      dateTime: DateTime.now().add(Duration(hours: 4)),
-      primaryBarHeight: 50,
-      hasReminder: false,
-    ),
-    GraphBar(
-      barHeight: _totalHeight,
-      barWidth: _barWidth,
-      dateTime: DateTime.now().add(Duration(hours: 6)),
-      primaryBarHeight: 230,
-      hasReminder: false,
-    ),
-    GraphBar(
-      barHeight: _totalHeight,
-      barWidth: _barWidth,
-      dateTime: DateTime.now().add(Duration(hours: 8)),
-      primaryBarHeight: 30,
-      hasReminder: false,
-    ),
-    GraphBar(
-      barHeight: _totalHeight,
-      barWidth: _barWidth,
-      dateTime: DateTime.now().add(Duration(hours: 10)),
-      primaryBarHeight: 10,
-      hasReminder: false,
-    ),
-    GraphBar(
-      barHeight: _totalHeight,
-      barWidth: _barWidth,
-      dateTime: DateTime.now().add(Duration(hours: 12)),
-      primaryBarHeight: 215,
-      hasReminder: true,
-    ),
-    GraphBar(
-      barHeight: _totalHeight,
-      barWidth: _barWidth,
-      dateTime: DateTime.now().add(Duration(hours: 14)),
-      primaryBarHeight: 123,
-      hasReminder: false,
-    ),
-    GraphBar(
-      barHeight: _totalHeight,
-      barWidth: _barWidth,
-      dateTime: DateTime.now().add(Duration(hours: 16)),
-      primaryBarHeight: 40,
-      hasReminder: false,
-    ),
-    GraphBar(
-      barHeight: _totalHeight,
-      barWidth: _barWidth,
-      dateTime: DateTime.now().add(Duration(hours: 18)),
-      primaryBarHeight: 70,
-      hasReminder: false,
-    ),
-    GraphBar(
-      barHeight: _totalHeight,
-      barWidth: _barWidth,
-      dateTime: DateTime.now().add(Duration(hours: 20)),
-      primaryBarHeight: 100,
-      hasReminder: false,
-    ),
-  ];
+
+  @override
+  void initState() {
+    super.initState();
+    context.read<IntensityCubit>().loadNationalIntensityData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
       height: _totalHeight,
-      child: ListView.builder(
-        physics: BouncingScrollPhysics(),
-        scrollDirection: Axis.horizontal,
-        itemCount: _backgroundBars.length,
-        itemBuilder: (context, index) {
-          return _backgroundBars[index];
+      child: BlocBuilder<IntensityCubit, IntensityState>(
+        builder: (context, state) {
+          if (state is IntensityFetchSuccess) {
+            return ListView.builder(
+              physics: BouncingScrollPhysics(),
+              scrollDirection: Axis.horizontal,
+              itemCount: state.timeSelection.length,
+              itemBuilder: (context, index) {
+                return GraphBar(
+                    barHeight: _totalHeight,
+                    barWidth: _barWidth,
+                    dateTime: state.timeSelection[index].from,
+                    primaryBarHeight: _totalHeight *
+                        (state.timeSelection[index].intensityAverage / 600),
+                    hasReminder: false);
+              },
+            );
+          } else
+            return Center(child: CircularProgressIndicator());
         },
       ),
     );
