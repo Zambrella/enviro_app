@@ -9,9 +9,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() async {
-  // IntensityRepository intensityRepository = IntensityRepository();
-  // var response = await intensityRepository.get48hrNationalIntensity();
-  // print(response[0].forecast);
+  IntensityRepository intensityRepository = IntensityRepository();
+  var response = await intensityRepository.getTimeSections();
+  print('First time section: ${response[0]}');
   runApp(MyApp());
 }
 

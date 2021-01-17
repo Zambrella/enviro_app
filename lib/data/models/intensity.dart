@@ -49,4 +49,9 @@ class Intensity {
   // No used
   factory Intensity.fromJson(String source) =>
       Intensity.fromMap(json.decode(source));
+
+  @override
+  String toString() {
+    return 'Intensity(from: $from, to: $to, forecast: $forecast, actual: $actual)';
+  }
 }
