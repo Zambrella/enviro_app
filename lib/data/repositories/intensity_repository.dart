@@ -6,6 +6,13 @@ import 'package:enviro_app/data/models/time_section.dart';
 import '../dataproviders/intesity_api.dart';
 import '../models/intensity.dart';
 
+extension DateTimeExtension on DateTime {
+  DateTime roundDown({Duration delta = const Duration(minutes: 30)}) {
+    return DateTime.fromMillisecondsSinceEpoch(
+        millisecondsSinceEpoch - millisecondsSinceEpoch % delta.inMilliseconds);
+  }
+}
+
 class IntensityRepository {
   final IntensityApi api = IntensityApi();
 
@@ -49,8 +56,7 @@ class IntensityRepository {
   Future<List<TimeSection>> getTimeSections() async {
     // First step is to get all the Intensity objects within the 48 hr time period
     var intensities = await get48hrNationalIntensity();
-    //! I think I will need to round now to the earliest 30 mins e.g. 12:45 -> 12:30
-    var now = DateTime.now();
+    var now = DateTime.now().roundDown();
     List<TimeSection> timeSections = [];
     try {
       for (var i = 0; i <= 48; i += 2) {
@@ -62,7 +68,8 @@ class IntensityRepository {
 
         // Create a list of Intensity objects that are between the 2 time periods
         var filteredList = intensities.where((element) {
-          return element.from.isAfter(beginTime) &&
+          return (element.from.isAfter(beginTime) ||
+                  element.from.isAtSameMomentAs(beginTime)) &&
               element.to.isBefore(endTime);
         }).toList();
 
