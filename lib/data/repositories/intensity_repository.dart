@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:enviro_app/data/models/statistics.dart';
 
 import '../dataproviders/intesity_api.dart';
@@ -9,7 +11,8 @@ class IntensityRepository {
   Future<Intensity> getNationalIntesity() async {
     try {
       String rawData = await api.getCurrentNationalIntesity();
-      Intensity intensity = Intensity.fromJson(rawData);
+      Map<String, dynamic> decoded = jsonDecode(rawData)['data'][0];
+      Intensity intensity = Intensity.fromMap(decoded);
       return intensity;
     } catch (e) {
       throw Exception('Error: $e');
@@ -18,12 +21,20 @@ class IntensityRepository {
 
   Future<IntensityStatistics> get24hrNationalStatistics() async {
     try {
-      String rawData = await api.get24hrNationalStatistics();
-      IntensityStatistics intensityStats =
-          IntensityStatistics.fromJson(rawData);
+      String rawData = await api.get48hrNationalStatistics();
+      Map<String, dynamic> decoded = jsonDecode(rawData)['data'][0];
+      IntensityStatistics intensityStats = IntensityStatistics.fromMap(decoded);
       return intensityStats;
     } catch (e) {
       throw Exception('Error: $e');
     }
   }
+
+  // Future<List<Intensity>> get48hrNationalIntensity() async {
+  //   try {
+  //     String rawData = await api.get48hrNationalIntensity();
+  //   } catch (e) {
+  //     throw Exception('Error: $e');
+  //   }
+  // }
 }

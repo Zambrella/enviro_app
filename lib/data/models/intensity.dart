@@ -34,12 +34,12 @@ class Intensity {
     if (map == null) return null;
 
     return Intensity(
-      from: DateTime.parse(map['data'][0]['from']),
-      to: DateTime.parse(map['data'][0]['to']),
-      forecast: map['data'][0]['intensity']['forecast'],
-      actual: map['data'][0]['intensity']['actual'],
-      intensityIndex: IndexHelper.convertStringToIntensityIndex(
-          map['data'][0]['intensity']['index']),
+      from: DateTime.parse(map['from']),
+      to: DateTime.parse(map['to']),
+      forecast: map['intensity']['forecast'],
+      actual: map['intensity']['actual'],
+      intensityIndex:
+          IndexHelper.convertStringToIntensityIndex(map['intensity']['index']),
     );
   }
 

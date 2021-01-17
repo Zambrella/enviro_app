@@ -36,13 +36,13 @@ class IntensityStatistics {
     if (map == null) return null;
 
     return IntensityStatistics(
-      from: DateTime.parse(map['data'][0]['from']),
-      to: DateTime.parse(map['data'][0]['to']),
-      max: map['data'][0]['intensity']['max'],
-      average: map['data'][0]['intensity']['average'],
-      min: map['data'][0]['intensity']['min'],
-      intensityIndex: IndexHelper.convertStringToIntensityIndex(
-          map['data'][0]['intensity']['index']),
+      from: DateTime.parse(map['from']),
+      to: DateTime.parse(map['to']),
+      max: map['intensity']['max'],
+      average: map['intensity']['average'],
+      min: map['intensity']['min'],
+      intensityIndex:
+          IndexHelper.convertStringToIntensityIndex(map['intensity']['index']),
     );
   }
 

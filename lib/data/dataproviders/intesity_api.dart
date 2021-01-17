@@ -12,12 +12,24 @@ class IntensityApi {
     }
   }
 
-  Future<String> get24hrNationalStatistics() async {
+  Future<String> get48hrNationalStatistics() async {
     DateTime now = DateTime.now();
-    DateTime next24 = DateTime.now().add(Duration(hours: 24));
+    DateTime next48 = DateTime.now().add(Duration(hours: 48));
     var url =
-        'https://api.carbonintensity.org.uk/intensity/stats/${now.toIso8601String()}/${next24.toIso8601String()}';
+        'https://api.carbonintensity.org.uk/intensity/stats/${now.toIso8601String()}/${next48.toIso8601String()}';
 
+    var response = await http.get(url);
+    if (response.statusCode == 200) {
+      return response.body;
+    } else {
+      throw Exception('Failed to load data');
+    }
+  }
+
+  Future<String> get48hrNationalIntensity() async {
+    DateTime now = DateTime.now();
+    var url =
+        'https://api.carbonintensity.org.uk/intensity/${now.toIso8601String()}/fw48h';
     var response = await http.get(url);
     if (response.statusCode == 200) {
       return response.body;
