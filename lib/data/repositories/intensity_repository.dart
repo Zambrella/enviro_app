@@ -7,7 +7,7 @@ import '../dataproviders/intesity_api.dart';
 import '../models/intensity.dart';
 
 extension DateTimeExtension on DateTime {
-  DateTime roundDown({Duration delta = const Duration(minutes: 30)}) {
+  DateTime roundDown({Duration delta = const Duration(minutes: 60)}) {
     return DateTime.fromMillisecondsSinceEpoch(
         millisecondsSinceEpoch - millisecondsSinceEpoch % delta.inMilliseconds);
   }
@@ -56,6 +56,8 @@ class IntensityRepository {
   Future<List<TimeSection>> getTimeSections() async {
     // First step is to get all the Intensity objects within the 48 hr time period
     var intensities = await get48hrNationalIntensity();
+    // Next is to round down to the nearest 30 minutes because API spits data out on the hour and 30 past hour
+    // Todo: Get it to round down to nearest even hour
     var now = DateTime.now().roundDown();
     List<TimeSection> timeSections = [];
     try {

@@ -1,7 +1,9 @@
 import 'package:enviro_app/business_logic/cubits/cubit/intensity_cubit.dart';
+import 'package:enviro_app/constants/functions.dart';
 import 'package:enviro_app/constants/ui_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 
 class IntensityPageGraph extends StatefulWidget {
   @override
@@ -31,12 +33,14 @@ class _IntensityPageGraphState extends State<IntensityPageGraph> {
               itemCount: state.timeSelection.length,
               itemBuilder: (context, index) {
                 return GraphBar(
-                    barHeight: _totalHeight,
-                    barWidth: _barWidth,
-                    dateTime: state.timeSelection[index].from,
-                    primaryBarHeight: _totalHeight *
-                        (state.timeSelection[index].intensityAverage / 600),
-                    hasReminder: false);
+                  barHeight: _totalHeight,
+                  barWidth: _barWidth,
+                  dateTime: state.timeSelection[index].from,
+                  primaryBarHeight: _totalHeight *
+                      (state.timeSelection[index].intensityAverage / 600),
+                  hasReminder: false,
+                  intensity: state.timeSelection[index].intensityAverage,
+                );
               },
             );
           } else
@@ -53,6 +57,7 @@ class GraphBar extends StatelessWidget {
   final DateTime dateTime;
   final double primaryBarHeight;
   final bool hasReminder;
+  final int intensity;
   final double hourTextHeight = 25;
   final double dayTextHeight = 20;
   GraphBar({
@@ -61,6 +66,7 @@ class GraphBar extends StatelessWidget {
     @required this.dateTime,
     @required this.primaryBarHeight,
     @required this.hasReminder,
+    @required this.intensity,
   });
   @override
   Widget build(BuildContext context) {
@@ -97,7 +103,7 @@ class GraphBar extends StatelessWidget {
                 height: primaryBarHeight,
                 width: barWidth,
                 decoration: BoxDecoration(
-                  color: kWarningColor,
+                  color: UIFunctions.getColor(intensity),
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(5),
                     topRight: Radius.circular(5),
@@ -119,7 +125,7 @@ class GraphBar extends StatelessWidget {
           height: hourTextHeight,
           child: Center(
             child: Text(
-              '${dateTime.hour}:${dateTime.minute}',
+              DateFormat.Hm().format(dateTime),
               style: Theme.of(context).textTheme.bodyText1,
             ),
           ),
@@ -127,7 +133,9 @@ class GraphBar extends StatelessWidget {
         Container(
           height: dayTextHeight,
           // Only show day if it's a new day
-          child: dateTime.hour == 0 ? Text('${dateTime.day}') : Text(' '),
+          child: dateTime.hour == 0 || dateTime.hour == 1
+              ? Text(DateFormat.E().format(dateTime))
+              : Text(' '),
         ),
       ],
     );
