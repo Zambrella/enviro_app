@@ -2,7 +2,7 @@ import 'package:enviro_app/constants/ui_constants.dart';
 import 'package:flutter/material.dart';
 
 class IntensityPageGraph extends StatelessWidget {
-  static const _totalHeight = 320.0;
+  static const _totalHeight = 350.0;
   static const _barWidth = 32.0;
   final List<GraphBar> _backgroundBars = [
     GraphBar(
@@ -15,70 +15,70 @@ class IntensityPageGraph extends StatelessWidget {
     GraphBar(
       barHeight: _totalHeight,
       barWidth: _barWidth,
-      dateTime: DateTime.now(),
+      dateTime: DateTime.now().add(Duration(hours: 2)),
       primaryBarHeight: 100,
       hasReminder: true,
     ),
     GraphBar(
       barHeight: _totalHeight,
       barWidth: _barWidth,
-      dateTime: DateTime.now(),
+      dateTime: DateTime.now().add(Duration(hours: 4)),
       primaryBarHeight: 50,
       hasReminder: false,
     ),
     GraphBar(
       barHeight: _totalHeight,
       barWidth: _barWidth,
-      dateTime: DateTime.now(),
+      dateTime: DateTime.now().add(Duration(hours: 6)),
       primaryBarHeight: 230,
       hasReminder: false,
     ),
     GraphBar(
       barHeight: _totalHeight,
       barWidth: _barWidth,
-      dateTime: DateTime.now(),
+      dateTime: DateTime.now().add(Duration(hours: 8)),
       primaryBarHeight: 30,
       hasReminder: false,
     ),
     GraphBar(
       barHeight: _totalHeight,
       barWidth: _barWidth,
-      dateTime: DateTime.now(),
+      dateTime: DateTime.now().add(Duration(hours: 10)),
       primaryBarHeight: 10,
       hasReminder: false,
     ),
     GraphBar(
       barHeight: _totalHeight,
       barWidth: _barWidth,
-      dateTime: DateTime.now(),
+      dateTime: DateTime.now().add(Duration(hours: 12)),
       primaryBarHeight: 215,
       hasReminder: true,
     ),
     GraphBar(
       barHeight: _totalHeight,
       barWidth: _barWidth,
-      dateTime: DateTime.now(),
+      dateTime: DateTime.now().add(Duration(hours: 14)),
       primaryBarHeight: 123,
       hasReminder: false,
     ),
     GraphBar(
       barHeight: _totalHeight,
       barWidth: _barWidth,
-      dateTime: DateTime.now(),
+      dateTime: DateTime.now().add(Duration(hours: 16)),
       primaryBarHeight: 40,
       hasReminder: false,
     ),
     GraphBar(
       barHeight: _totalHeight,
       barWidth: _barWidth,
-      dateTime: DateTime.now(),
+      dateTime: DateTime.now().add(Duration(hours: 18)),
       primaryBarHeight: 70,
       hasReminder: false,
     ),
     GraphBar(
       barHeight: _totalHeight,
       barWidth: _barWidth,
-      dateTime: DateTime.now(),
+      dateTime: DateTime.now().add(Duration(hours: 20)),
       primaryBarHeight: 100,
       hasReminder: false,
     ),
@@ -105,7 +105,8 @@ class GraphBar extends StatelessWidget {
   final DateTime dateTime;
   final double primaryBarHeight;
   final bool hasReminder;
-  final double textHeight = 30;
+  final double hourTextHeight = 25;
+  final double dayTextHeight = 20;
   GraphBar({
     @required this.barHeight,
     @required this.barWidth,
@@ -123,7 +124,7 @@ class GraphBar extends StatelessWidget {
             alignment: Alignment.bottomCenter,
             children: [
               Container(
-                height: barHeight - textHeight,
+                height: barHeight - hourTextHeight - dayTextHeight,
                 width: barWidth,
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
@@ -167,13 +168,18 @@ class GraphBar extends StatelessWidget {
           ),
         ),
         Container(
-          height: textHeight,
+          height: hourTextHeight,
           child: Center(
             child: Text(
               '${dateTime.hour}:${dateTime.minute}',
-              style: Theme.of(context).textTheme.bodyText2,
+              style: Theme.of(context).textTheme.bodyText1,
             ),
           ),
+        ),
+        Container(
+          height: dayTextHeight,
+          // Only show day if it's a new day
+          child: dateTime.hour == 0 ? Text('${dateTime.day}') : Text(' '),
         ),
       ],
     );
