@@ -6,6 +6,8 @@ import 'package:enviro_app/data/models/time_section.dart';
 import '../dataproviders/intesity_api.dart';
 import '../models/intensity.dart';
 
+import 'package:http/http.dart' as http;
+
 extension DateTimeExtension on DateTime {
   DateTime roundDown({Duration delta = const Duration(minutes: 60)}) {
     return DateTime.fromMillisecondsSinceEpoch(
@@ -18,7 +20,7 @@ class IntensityRepository {
 
   Future<Intensity> getNationalIntesity() async {
     try {
-      String rawData = await api.getCurrentNationalIntesity();
+      String rawData = await api.getCurrentNationalIntesity(http.Client());
       Map<String, dynamic> decoded = jsonDecode(rawData)['data'][0];
       Intensity intensity = Intensity.fromMap(decoded);
       return intensity;
@@ -29,7 +31,7 @@ class IntensityRepository {
 
   Future<IntensityStatistics> get48hrNationalStatistics() async {
     try {
-      String rawData = await api.get48hrNationalStatistics();
+      String rawData = await api.get48hrNationalStatistics(http.Client());
       Map<String, dynamic> decoded = jsonDecode(rawData)['data'][0];
       IntensityStatistics intensityStats = IntensityStatistics.fromMap(decoded);
       return intensityStats;
@@ -41,7 +43,7 @@ class IntensityRepository {
   // Helper function to get a list of Intensity objects
   Future<List<Intensity>> get48hrNationalIntensity() async {
     try {
-      String rawData = await api.get48hrNationalIntensity();
+      String rawData = await api.get48hrNationalIntensity(http.Client());
       var decoded = jsonDecode(rawData)['data'];
       List<Intensity> intensityList = [];
       decoded.forEach((element) {

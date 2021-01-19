@@ -20,7 +20,6 @@ class Intensity {
   });
 
   Map<String, dynamic> toMap() {
-    //! This will not work
     return {
       'from': from.toIso8601String(),
       'to': to.toIso8601String(),
