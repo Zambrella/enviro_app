@@ -14,11 +14,10 @@ class IntensityApi {
     }
   }
 
-  Future<String> get48hrNationalStatistics(http.Client client) async {
-    DateTime _now = DateTime.now();
-    DateTime _next48 = DateTime.now().add(Duration(hours: 48));
+  Future<String> get48hrNationalStatistics(
+      http.Client client, DateTime now, DateTime next48) async {
     var _url =
-        '$baseURL/intensity/stats/${_now.toIso8601String()}/${_next48.toIso8601String()}';
+        '$baseURL/intensity/stats/${now.toIso8601String()}/${next48.toIso8601String()}';
 
     var response = await client.get(_url);
     if (response.statusCode == 200) {
@@ -28,9 +27,9 @@ class IntensityApi {
     }
   }
 
-  Future<String> get48hrNationalIntensity(http.Client client) async {
-    DateTime _now = DateTime.now();
-    var _url = '$baseURL/intensity/${_now.toIso8601String()}/fw48h';
+  Future<String> get48hrNationalIntensity(
+      http.Client client, DateTime now) async {
+    var _url = '$baseURL/intensity/${now.toIso8601String()}/fw48h';
     var response = await client.get(_url);
     if (response.statusCode == 200) {
       return response.body;
