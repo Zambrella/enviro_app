@@ -22,8 +22,7 @@ class MyApp extends StatelessWidget {
       ),
       home: BlocProvider(
         //* Could also load the initial data here: `IntensityCubit()..loadData()`
-        create: (context) => IntensityCubit(repo: IntensityRepository())
-          ..loadNationalIntensityData(),
+        create: (context) => IntensityCubit(repo: IntensityRepository()),
         child: HomePage(),
       ),
     );
