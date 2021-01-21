@@ -1,4 +1,6 @@
+import 'package:enviro_app/business_logic/cubits/cubit/generation_cubit.dart';
 import 'package:enviro_app/constants/ui_constants.dart';
+import 'package:enviro_app/data/repositories/generation_repository.dart';
 import 'package:enviro_app/data/repositories/intensity_repository.dart';
 import 'package:enviro_app/ui/theme/text_theme.dart';
 
@@ -15,15 +17,25 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-        fontFamily: 'Lato',
-        primaryColor: kPrimaryColor,
-        textTheme: kTextTheme,
-      ),
-      home: BlocProvider(
-        create: (context) => IntensityCubit(repo: IntensityRepository()),
-        child: HomePage(),
-      ),
-    );
+        theme: ThemeData(
+          fontFamily: 'Lato',
+          primaryColor: kPrimaryColor,
+          textTheme: kTextTheme,
+        ),
+        home: MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (context) => IntensityCubit(
+                repo: IntensityRepository(),
+              ),
+            ),
+            BlocProvider(
+              create: (context) => GenerationCubit(
+                repo: GenerationRepository(),
+              ),
+            ),
+          ],
+          child: HomePage(),
+        ));
   }
 }
