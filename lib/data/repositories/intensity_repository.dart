@@ -17,10 +17,13 @@ extension DateTimeExtension on DateTime {
 
 class IntensityRepository {
   final IntensityApi api = IntensityApi();
+  http.Client client = http.Client();
+  var now = DateTime.now();
+  var next48 = DateTime.now().add(Duration(hours: 48));
 
   Future<Intensity> getNationalIntesity() async {
     try {
-      String rawData = await api.getCurrentNationalIntesity(http.Client());
+      String rawData = await api.getCurrentNationalIntesity(client);
       Map<String, dynamic> decoded = jsonDecode(rawData)['data'][0];
       Intensity intensity = Intensity.fromMap(decoded);
       return intensity;
@@ -31,8 +34,7 @@ class IntensityRepository {
 
   Future<IntensityStatistics> get48hrNationalStatistics() async {
     try {
-      String rawData = await api.get48hrNationalStatistics(http.Client(),
-          DateTime.now(), DateTime.now().add(Duration(hours: 48)));
+      String rawData = await api.get48hrNationalStatistics(client, now, next48);
       Map<String, dynamic> decoded = jsonDecode(rawData)['data'][0];
       IntensityStatistics intensityStats = IntensityStatistics.fromMap(decoded);
       return intensityStats;
@@ -44,8 +46,7 @@ class IntensityRepository {
   // Helper function to get a list of Intensity objects
   Future<List<Intensity>> get48hrNationalIntensity() async {
     try {
-      String rawData =
-          await api.get48hrNationalIntensity(http.Client(), DateTime.now());
+      String rawData = await api.get48hrNationalIntensity(client, now);
       var decoded = jsonDecode(rawData)['data'];
       List<Intensity> intensityList = [];
       decoded.forEach((element) {
