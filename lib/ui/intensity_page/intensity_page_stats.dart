@@ -21,7 +21,6 @@ class _IntensityPageStatsState extends State<IntensityPageStats>
   @override
   void initState() {
     super.initState();
-    context.read<IntensityCubit>().loadNationalIntensityData();
     _textAnimationController = AnimationController(
         vsync: this, duration: Duration(milliseconds: 1000));
     _intTweenAverage = IntTween(begin: 0, end: 1);

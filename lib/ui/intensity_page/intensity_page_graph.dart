@@ -16,7 +16,6 @@ class _IntensityPageGraphState extends State<IntensityPageGraph> {
   @override
   void initState() {
     super.initState();
-    context.read<IntensityCubit>().loadNationalIntensityData();
   }
 
   @override

@@ -17,7 +17,6 @@ class _IntensityPageHeaderState extends State<IntensityPageHeader>
   @override
   void initState() {
     super.initState();
-    context.read<IntensityCubit>().loadNationalIntensityData();
     _textAnimationController = AnimationController(
         vsync: this, duration: Duration(milliseconds: 1000));
     // End value doesn't really matter here
