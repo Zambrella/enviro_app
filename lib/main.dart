@@ -21,7 +21,6 @@ class MyApp extends StatelessWidget {
         textTheme: kTextTheme,
       ),
       home: BlocProvider(
-        //* Could also load the initial data here: `IntensityCubit()..loadData()`
         create: (context) => IntensityCubit(repo: IntensityRepository()),
         child: HomePage(),
       ),
