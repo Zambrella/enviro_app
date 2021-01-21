@@ -29,7 +29,7 @@ class GenerationRepository {
   }
 
   Future<Map<String, double>> getAverageGenerationMix(
-      {DateTime from, DateTime to}) async {
+      {@required DateTime from, @required DateTime to}) async {
     // Get all the Generation objects in the given time period
     var generationList = await getGenerationMix(from: from, to: to);
     // Next we will want to iterate through each generation object and extract each generation type
@@ -44,8 +44,8 @@ class GenerationRepository {
     List<GenerationType> solar = [];
     List<GenerationType> wind = [];
 
-    generationList.map(
-      (generationList) => generationList.generation.map(
+    generationList.forEach(
+      (generationList) => generationList.generation.forEach(
         (e) {
           switch (e.generationName) {
             case ('biomass'):
