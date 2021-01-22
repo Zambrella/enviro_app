@@ -97,6 +97,7 @@ class _GenerationPageState extends State<GenerationPage> {
 
               return Expanded(
                 child: Container(
+                  padding: EdgeInsets.all(8),
                   child: charts.PieChart(
                     series,
                     animate: true,

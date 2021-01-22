@@ -49,15 +49,14 @@ class _IntensityPageGraphState extends State<IntensityPageGraph> {
   }
 }
 
-class GraphBar extends StatelessWidget {
+class GraphBar extends StatefulWidget {
   final double barHeight;
   final double barWidth;
   final DateTime dateTime;
   final double primaryBarHeight;
   final bool hasReminder;
   final int intensity;
-  final double hourTextHeight = 25;
-  final double dayTextHeight = 20;
+
   GraphBar({
     @required this.barHeight,
     @required this.barWidth,
@@ -66,6 +65,30 @@ class GraphBar extends StatelessWidget {
     @required this.hasReminder,
     @required this.intensity,
   });
+
+  @override
+  _GraphBarState createState() => _GraphBarState();
+}
+
+class _GraphBarState extends State<GraphBar> {
+  final double hourTextHeight = 25;
+
+  final double dayTextHeight = 20;
+
+  // Initial value for the bar height so it can animate from 0
+  double _barHeight = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    // Need to wait until the bars are built before updating the value
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      setState(() {
+        _barHeight = widget.primaryBarHeight;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -76,8 +99,8 @@ class GraphBar extends StatelessWidget {
             alignment: Alignment.bottomCenter,
             children: [
               Container(
-                height: barHeight - hourTextHeight - dayTextHeight,
-                width: barWidth,
+                height: widget.barHeight - hourTextHeight - dayTextHeight,
+                width: widget.barWidth,
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     begin: Alignment.bottomCenter,
@@ -97,11 +120,12 @@ class GraphBar extends StatelessWidget {
                   ),
                 ),
               ),
-              Container(
-                height: primaryBarHeight,
-                width: barWidth,
+              AnimatedContainer(
+                duration: Duration(milliseconds: 800),
+                height: _barHeight,
+                width: widget.barWidth,
                 decoration: BoxDecoration(
-                  color: UIFunctions.getColor(intensity),
+                  color: UIFunctions.getColor(widget.intensity),
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(5),
                     topRight: Radius.circular(5),
@@ -110,7 +134,7 @@ class GraphBar extends StatelessWidget {
               ),
               Positioned(
                 top: 4,
-                child: hasReminder
+                child: widget.hasReminder
                     ? Container(
                         child: Icon(Icons.alarm),
                       )
@@ -123,7 +147,7 @@ class GraphBar extends StatelessWidget {
           height: hourTextHeight,
           child: Center(
             child: Text(
-              DateFormat.Hm().format(dateTime),
+              DateFormat.Hm().format(widget.dateTime),
               style: Theme.of(context).textTheme.bodyText1,
             ),
           ),
@@ -131,8 +155,8 @@ class GraphBar extends StatelessWidget {
         Container(
           height: dayTextHeight,
           // Only show day if it's a new day
-          child: dateTime.hour == 0 || dateTime.hour == 1
-              ? Text(DateFormat.E().format(dateTime))
+          child: widget.dateTime.hour == 0 || widget.dateTime.hour == 1
+              ? Text(DateFormat.E().format(widget.dateTime))
               : Text(' '),
         ),
       ],
