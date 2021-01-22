@@ -94,14 +94,14 @@ class GenerationRepository {
     // Finally we want to return all the values as a map (I think?)
     return {
       'biomass': biomassAvrg,
-      'coal': coalAvrg,
-      'imports': importsAvrg,
-      'gas': gasAvrg,
       'nuclear': nuclearAvrg,
-      'other': otherAvrg,
+      'wind': windAvrg,
       'hydro': hydroAvrg,
       'solar': solarAvrg,
-      'wind': windAvrg
+      'other': otherAvrg,
+      'imports': importsAvrg,
+      'coal': coalAvrg,
+      'gas': gasAvrg
     };
   }
 
