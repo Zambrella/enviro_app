@@ -1,4 +1,7 @@
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:enviro_app/ui/generation_page/index_item.dart';
+import 'package:enviro_app/ui/generation_page/pie_data_model.dart';
+import 'package:enviro_app/ui/generation_page/select_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -18,69 +21,81 @@ class _GenerationPageState extends State<GenerationPage> {
         from: DateTime.now().subtract(Duration(days: 7)), to: DateTime.now());
   }
 
+  // Index to hold what date period is selected
+  int _selectedIndex = 1;
+
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<GenerationCubit, GenerationState>(
-      builder: (context, state) {
-        if (state is GenerationFetchInProgress) {
-          return Center(child: CircularProgressIndicator());
-        }
-        if (state is GenerationFetchSuccess) {
-          print(state.generationInfo);
-          // Convert the state data into a class that can be used with the Pie Chart
-          // and generally make it easier to handle
-          List<PieData> data = [];
-          state.generationInfo.forEach(
-              (key, value) => data.add(PieData(title: key, percentage: value)));
-          // Create a sorted list of the above data for use in the key
-          List<PieData> sortedList = [...data];
-          sortedList.sort((a, b) => b.percentage.compareTo(a.percentage));
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            SelectButton(
+              buttonText: 'Past Day',
+              isSelected: _selectedIndex == 0,
+              buttonFunction: () {
+                setState(() {
+                  _selectedIndex = 0;
+                });
+                context.read<GenerationCubit>().loadGenerationData(
+                    from: DateTime.now().subtract(Duration(days: 1)),
+                    to: DateTime.now());
+              },
+            ),
+            SelectButton(
+              buttonText: 'Past 7 Days',
+              isSelected: _selectedIndex == 1,
+              buttonFunction: () {
+                setState(() {
+                  _selectedIndex = 1;
+                });
+                context.read<GenerationCubit>().loadGenerationData(
+                    from: DateTime.now().subtract(Duration(days: 7)),
+                    to: DateTime.now());
+              },
+            ),
+            SelectButton(
+              buttonText: 'Past 28 Days',
+              isSelected: _selectedIndex == 2,
+              buttonFunction: () {
+                setState(() {
+                  _selectedIndex = 2;
+                });
+                context.read<GenerationCubit>().loadGenerationData(
+                    from: DateTime.now().subtract(Duration(days: 28)),
+                    to: DateTime.now());
+              },
+            ),
+          ],
+        ),
+        BlocBuilder<GenerationCubit, GenerationState>(
+          builder: (context, state) {
+            if (state is GenerationFetchInProgress) {
+              return Expanded(
+                  child: Center(child: CircularProgressIndicator()));
+            }
+            if (state is GenerationFetchSuccess) {
+              print(state.generationInfo);
+              // Convert the state data into a class that can be used with the Pie Chart
+              // and generally make it easier to handle
+              List<PieData> data = [];
+              state.generationInfo.forEach((key, value) =>
+                  data.add(PieData(title: key, percentage: value)));
 
-          List<charts.Series<PieData, String>> series = [
-            charts.Series(
-              id: 'Generation Mix',
-              data: data,
-              domainFn: (PieData pieData, _) => pieData.title,
-              measureFn: (PieData pieData, _) => pieData.percentage,
-              labelAccessorFn: (PieData pieData, _) => '${pieData.title}',
-              colorFn: (PieData piedata, _) =>
-                  charts.ColorUtil.fromDartColor(piedata.color),
-            )
-          ];
+              List<charts.Series<PieData, String>> series = [
+                charts.Series(
+                  id: 'Generation Mix',
+                  data: data,
+                  domainFn: (PieData pieData, _) => pieData.title,
+                  measureFn: (PieData pieData, _) => pieData.percentage,
+                  labelAccessorFn: (PieData pieData, _) => '${pieData.title}',
+                  colorFn: (PieData piedata, _) =>
+                      charts.ColorUtil.fromDartColor(piedata.color),
+                )
+              ];
 
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  RaisedButton(
-                    onPressed: () {
-                      context.read<GenerationCubit>().loadGenerationData(
-                          from: DateTime.now().subtract(Duration(days: 1)),
-                          to: DateTime.now());
-                    },
-                    child: Text('Past Day'),
-                  ),
-                  RaisedButton(
-                    onPressed: () {
-                      context.read<GenerationCubit>().loadGenerationData(
-                          from: DateTime.now().subtract(Duration(days: 7)),
-                          to: DateTime.now());
-                    },
-                    child: Text('Past 7 Days'),
-                  ),
-                  RaisedButton(
-                    onPressed: () {
-                      context.read<GenerationCubit>().loadGenerationData(
-                          from: DateTime.now().subtract(Duration(days: 28)),
-                          to: DateTime.now());
-                    },
-                    child: Text('Past 28 Days'),
-                  ),
-                ],
-              ),
-              Expanded(
+              return Expanded(
                 child: Container(
                   child: charts.PieChart(
                     series,
@@ -113,8 +128,25 @@ class _GenerationPageState extends State<GenerationPage> {
                     ),
                   ),
                 ),
-              ),
-              Center(
+              );
+            } else {
+              return Container();
+            }
+          },
+        ),
+        BlocBuilder<GenerationCubit, GenerationState>(
+          builder: (context, state) {
+            if (state is GenerationFetchSuccess) {
+              // Convert the state data into a class that can be used with the Pie Chart
+              // and generally make it easier to handle
+              List<PieData> data = [];
+              state.generationInfo.forEach((key, value) =>
+                  data.add(PieData(title: key, percentage: value)));
+              // Create a sorted list of the above data for use in the key
+              List<PieData> sortedList = [...data];
+              sortedList.sort((a, b) => b.percentage.compareTo(a.percentage));
+
+              return Center(
                 child: Wrap(
                   runAlignment: WrapAlignment.center,
                   crossAxisAlignment: WrapCrossAlignment.center,
@@ -130,90 +162,16 @@ class _GenerationPageState extends State<GenerationPage> {
                     ),
                   ),
                 ),
-              ),
-              SizedBox(
-                height: 16,
-              )
-            ],
-          );
-        } else {
-          return Container();
-        }
-      },
-    );
-  }
-}
-
-class IndexItem extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  final Color color;
-  final double value;
-  IndexItem(
-      {@required this.icon,
-      @required this.label,
-      @required this.value,
-      @required this.color});
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Icon(
-          icon,
-          color: color,
+              );
+            } else {
+              return Container();
+            }
+          },
         ),
-        Text('$label - '),
-        Text('${value.toStringAsFixed(1)}%'),
+        SizedBox(
+          height: 16,
+        )
       ],
     );
-  }
-}
-
-class PieData {
-  final String title;
-  final double percentage;
-  Color color;
-  IconData icon;
-  PieData({this.title, this.percentage}) {
-    switch (this.title) {
-      case ('biomass'):
-        this.color = kVeryLow;
-        this.icon = Icons.eco;
-        break;
-      case ('coal'):
-        this.color = kVeryHigh;
-        this.icon = Icons.whatshot;
-        break;
-      case ('imports'):
-        this.color = kModerate;
-        this.icon = Icons.local_shipping;
-        break;
-      case ('gas'):
-        this.color = kVeryHigh;
-        this.icon = Icons.local_gas_station;
-        break;
-      case ('nuclear'):
-        this.color = kVeryLow;
-        this.icon = Icons.science;
-        break;
-      case ('other'):
-        this.color = kModerate;
-        this.icon = Icons.battery_unknown;
-        break;
-      case ('hydro'):
-        this.color = kVeryLow;
-        this.icon = Icons.waves;
-        break;
-      case ('solar'):
-        this.color = kVeryLow;
-        this.icon = Icons.wb_sunny;
-        break;
-      case ('wind'):
-        this.color = kVeryLow;
-        this.icon = Icons.cloud;
-        break;
-    }
   }
 }
