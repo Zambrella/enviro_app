@@ -1,4 +1,4 @@
-import 'package:enviro_app/constants/ui_constants.dart';
+import '../../constants/ui_constants.dart';
 import 'package:flutter/material.dart';
 
 class PieData {

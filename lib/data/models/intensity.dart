@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:enviro_app/constants/functions.dart';
+import '../../constants/functions.dart';
 
 import '../../constants/enums.dart';
 

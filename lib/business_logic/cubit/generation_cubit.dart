@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
-import 'package:enviro_app/data/repositories/generation_repository.dart';
+import '../../data/repositories/generation_repository.dart';
 
 part 'generation_state.dart';
 

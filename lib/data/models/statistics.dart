@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:enviro_app/constants/enums.dart';
-import 'package:enviro_app/constants/functions.dart';
+import '../../constants/enums.dart';
+import '../../constants/functions.dart';
 
 class IntensityStatistics {
   DateTime from;

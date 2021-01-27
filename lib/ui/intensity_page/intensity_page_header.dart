@@ -1,5 +1,5 @@
-import 'package:enviro_app/business_logic/cubits/cubit/intensity_cubit.dart';
-import 'package:enviro_app/constants/functions.dart';
+import '../../business_logic/cubit/intensity_cubit.dart';
+import '../../constants/functions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

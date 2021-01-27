@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:enviro_app/data/models/statistics.dart';
-import 'package:enviro_app/data/models/time_section.dart';
+import '../models/statistics.dart';
+import '../models/time_section.dart';
 
 import '../dataproviders/intesity_api.dart';
 import '../models/intensity.dart';

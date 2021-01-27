@@ -1,12 +1,12 @@
 import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:enviro_app/ui/generation_page/index_item.dart';
-import 'package:enviro_app/ui/generation_page/pie_data_model.dart';
-import 'package:enviro_app/ui/generation_page/select_button.dart';
+import 'index_item.dart';
+import 'pie_data_model.dart';
+import 'select_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:enviro_app/business_logic/cubits/cubit/generation_cubit.dart';
-import 'package:enviro_app/constants/ui_constants.dart';
+import '../../business_logic/cubit/generation_cubit.dart';
+import '../../constants/ui_constants.dart';
 
 class GenerationPage extends StatefulWidget {
   @override

@@ -1,7 +1,7 @@
-import 'package:enviro_app/ui/generation_page/generation_page.dart';
-import 'package:enviro_app/ui/intensity_page/intensity_page.dart';
-import 'package:enviro_app/ui/reminder_page/reminder_page.dart';
-import 'package:enviro_app/ui/settings_page/settings_page.dart';
+import '../generation_page/generation_page.dart';
+import '../intensity_page/intensity_page.dart';
+import '../reminder_page/reminder_page.dart';
+import '../settings_page/settings_page.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {

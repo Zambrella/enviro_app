@@ -1,10 +1,10 @@
-import 'package:enviro_app/business_logic/cubits/cubit/generation_cubit.dart';
-import 'package:enviro_app/constants/ui_constants.dart';
-import 'package:enviro_app/data/repositories/generation_repository.dart';
-import 'package:enviro_app/data/repositories/intensity_repository.dart';
-import 'package:enviro_app/ui/theme/text_theme.dart';
+import 'business_logic/cubit/generation_cubit.dart';
+import 'constants/ui_constants.dart';
+import 'data/repositories/generation_repository.dart';
+import 'data/repositories/intensity_repository.dart';
+import 'ui/theme/text_theme.dart';
 
-import 'business_logic/cubits/cubit/intensity_cubit.dart';
+import 'business_logic/cubit/intensity_cubit.dart';
 import 'ui/home_page/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:enviro_app/data/models/intensity.dart';
+import 'intensity.dart';
 
 class TimeSection {
   List<Intensity> intensities;

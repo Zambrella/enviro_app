@@ -1,4 +1,4 @@
-import 'package:enviro_app/constants/ui_constants.dart';
+import 'ui_constants.dart';
 import 'package:flutter/material.dart';
 
 import 'enums.dart';

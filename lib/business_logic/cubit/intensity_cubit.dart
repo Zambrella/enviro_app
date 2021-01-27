@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
-import 'package:enviro_app/data/models/statistics.dart';
-import 'package:enviro_app/data/models/time_section.dart';
-import '../../../data/models/intensity.dart';
-import '../../../data/repositories/intensity_repository.dart';
+import '../../data/models/intensity.dart';
+import '../../data/models/statistics.dart';
+import '../../data/models/time_section.dart';
+import '../../data/repositories/intensity_repository.dart';
 import 'package:meta/meta.dart';
 
 part 'intensity_state.dart';

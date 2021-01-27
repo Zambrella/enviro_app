@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-import 'package:enviro_app/data/dataproviders/generation_api.dart';
-import 'package:enviro_app/data/models/generation.dart';
+import '../dataproviders/generation_api.dart';
+import '../models/generation.dart';
 
 class GenerationRepository {
   var generationApi = GenerationApi();
