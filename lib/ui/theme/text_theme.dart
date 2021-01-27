@@ -42,6 +42,6 @@ const TextTheme kTextTheme = const TextTheme(
     fontFamily: 'Lato',
     fontSize: 14,
     fontWeight: FontWeight.w700,
-    color: kSecondaryTextColor,
+    color: kPrimaryTextColor,
   ),
 );
