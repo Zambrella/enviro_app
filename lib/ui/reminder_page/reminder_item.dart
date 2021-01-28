@@ -1,4 +1,5 @@
 import 'package:enviro_app/constants/functions.dart';
+import 'package:enviro_app/constants/ui_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -16,6 +17,7 @@ class ReminderItem extends StatelessWidget {
 
   // Can definitely do better than this!
   // Maybe a better way would be to get the day in the year and compare (although wouldn't account for reminders 365+ days in the future)
+  // Todo: What will happen if it's the 31st and day =+ 1? Also need an option for 'Overdue'
   String _getDay2(DateTime dateTime) {
     var now = DateTime.now();
     if (dateTime.year == now.year &&
@@ -66,9 +68,20 @@ class ReminderItem extends StatelessWidget {
                   title ?? 'Oh no it was null',
                   style: textTheme.headline6,
                 ),
-                Text(
-                  '${_getDay2(dueDate)}, ${DateFormat('h:mm a').format(dueDate)}',
-                  style: textTheme.bodyText1,
+                Row(
+                  children: [
+                    Text(
+                      '${_getDay2(dueDate)}, ${DateFormat('h:mm a').format(dueDate)}',
+                      style: textTheme.bodyText1,
+                    ),
+                    Visibility(
+                        visible: DateTime.now().isAfter(dueDate),
+                        child: Text(
+                          ' - Overdue',
+                          style:
+                              textTheme.bodyText1.copyWith(color: kErrorColor),
+                        )),
+                  ],
                 ),
               ],
             ),

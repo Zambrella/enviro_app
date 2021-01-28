@@ -22,7 +22,7 @@ class _ReminderPageState extends State<ReminderPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      // So that the button can position itself at the bottom of the screen
+      // Height set to infinite so that the button can position itself at the bottom of the screen
       height: double.infinity,
       child: Stack(
         alignment: Alignment.center,
