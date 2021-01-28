@@ -1,5 +1,6 @@
 import 'package:enviro_app/constants/functions.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class ReminderItem extends StatelessWidget {
   final String title;
@@ -12,6 +13,25 @@ class ReminderItem extends StatelessWidget {
     @required this.intensity,
     @required this.onTap,
   });
+
+  // Can definitely do better than this!
+  // Maybe a better way would be to get the day in the year and compare (although wouldn't account for reminders 365+ days in the future)
+  String _getDay2(DateTime dateTime) {
+    var now = DateTime.now();
+    if (dateTime.year == now.year &&
+        dateTime.month == now.month &&
+        dateTime.day == now.day) {
+      return 'Today';
+    } else if (dateTime.year == now.year &&
+        dateTime.month == now.month &&
+        dateTime.day + 1 == now.day) {
+      return 'Tomorrow';
+    } else {
+      // Just show the day of the week
+      return DateFormat.E().format(dateTime);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
@@ -47,7 +67,7 @@ class ReminderItem extends StatelessWidget {
                   style: textTheme.headline6,
                 ),
                 Text(
-                  dueDate.toIso8601String(),
+                  '${_getDay2(dueDate)}, ${DateFormat('h:mm a').format(dueDate)}',
                   style: textTheme.bodyText1,
                 ),
               ],
