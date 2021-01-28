@@ -1,5 +1,6 @@
 import 'package:enviro_app/business_logic/cubit/reminders_cubit.dart';
 import 'package:enviro_app/data/repositories/reminder_repository.dart';
+import 'package:enviro_app/ui/theme/input_decoration_theme.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -32,6 +33,7 @@ class MyApp extends StatelessWidget {
           fontFamily: 'Lato',
           primaryColor: kPrimaryColor,
           textTheme: kTextTheme,
+          inputDecorationTheme: kInputDecorationTheme,
         ),
         home: MultiBlocProvider(
           providers: [

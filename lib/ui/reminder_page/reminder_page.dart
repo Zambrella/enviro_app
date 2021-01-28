@@ -1,6 +1,7 @@
 import 'package:enviro_app/business_logic/cubit/reminders_cubit.dart';
 import 'package:enviro_app/data/models/reminder.dart';
 import 'package:enviro_app/ui/global_widgets/primary_button.dart';
+import 'package:enviro_app/ui/reminder_page/add_reminder_modal.dart';
 import 'package:enviro_app/ui/reminder_page/empty_reminders.dart';
 import 'package:enviro_app/ui/reminder_page/reminder_item.dart';
 import 'package:flutter/material.dart';
@@ -81,9 +82,11 @@ class _ReminderPageState extends State<ReminderPage> {
                 label: 'Add Reminder',
                 active: true,
                 function: () {
-                  context
-                      .read<RemindersCubit>()
-                      .addNewReminder(Reminder(name: 'Turn on dishwasher'));
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AddReminderModal();
+                      });
                 },
               ),
             ),
