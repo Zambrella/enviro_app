@@ -28,32 +28,36 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => IntensityCubit(
+            repo: IntensityRepository(),
+          ),
+        ),
+        BlocProvider(
+          create: (context) => GenerationCubit(
+            repo: GenerationRepository(),
+          ),
+        ),
+        BlocProvider(
+          create: (context) => RemindersCubit(
+            repo: ReminderRepository(),
+          ),
+        )
+      ],
+      child: MaterialApp(
         theme: ThemeData(
           fontFamily: 'Lato',
           primaryColor: kPrimaryColor,
+          accentColor: kPrimaryColor,
           textTheme: kTextTheme,
           inputDecorationTheme: kInputDecorationTheme,
+          colorScheme: ColorScheme.light(primary: kPrimaryColor),
+          // timePickerTheme: TimePickerThemeData(),
         ),
-        home: MultiBlocProvider(
-          providers: [
-            BlocProvider(
-              create: (context) => IntensityCubit(
-                repo: IntensityRepository(),
-              ),
-            ),
-            BlocProvider(
-              create: (context) => GenerationCubit(
-                repo: GenerationRepository(),
-              ),
-            ),
-            BlocProvider(
-              create: (context) => RemindersCubit(
-                repo: ReminderRepository(),
-              ),
-            )
-          ],
-          child: HomePage(),
-        ));
+        home: HomePage(),
+      ),
+    );
   }
 }

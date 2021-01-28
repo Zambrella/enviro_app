@@ -1,5 +1,4 @@
 import 'package:enviro_app/business_logic/cubit/reminders_cubit.dart';
-import 'package:enviro_app/data/models/reminder.dart';
 import 'package:enviro_app/ui/global_widgets/primary_button.dart';
 import 'package:enviro_app/ui/reminder_page/add_reminder_modal.dart';
 import 'package:enviro_app/ui/reminder_page/empty_reminders.dart';
