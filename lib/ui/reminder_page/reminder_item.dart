@@ -63,7 +63,7 @@ class ReminderItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  title,
+                  title ?? 'Oh no it was null',
                   style: textTheme.headline6,
                 ),
                 Text(

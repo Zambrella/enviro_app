@@ -24,4 +24,11 @@ class IntensityCubit extends Cubit<IntensityState> {
       ),
     );
   }
+
+  void loadSpecificTimeIntensityData(List<DateTime> dateTimes) async {
+    emit(IntensityFetchInProgress());
+    final List<Intensity> intensities =
+        await repo.getNationIntensityAtSpecificTime(dateTimes);
+    emit(IntensitySpecificTimePeriodSuccess(intensities: intensities));
+  }
 }

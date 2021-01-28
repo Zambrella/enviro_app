@@ -5,7 +5,6 @@ import 'package:enviro_app/ui/reminder_page/empty_reminders.dart';
 import 'package:enviro_app/ui/reminder_page/reminder_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'dart:math';
 
 class ReminderPage extends StatefulWidget {
   @override
@@ -17,6 +16,7 @@ class _ReminderPageState extends State<ReminderPage> {
   void initState() {
     super.initState();
     context.read<RemindersCubit>().getReminders();
+    // context.read<IntensityCubit>().loadSpecificTimeIntensityData();
   }
 
   @override

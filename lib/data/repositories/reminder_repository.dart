@@ -11,8 +11,7 @@ class ReminderRepository {
     if (box.isNotEmpty) {
       reminders = box.values.toList();
     }
-    // Get all the reminders using .values which returns an iterable
-    print(reminders);
+    print('Reminder Repository: $reminders');
     return reminders;
   }
 

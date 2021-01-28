@@ -32,6 +32,23 @@ class IntensityRepository {
     }
   }
 
+  Future<List<Intensity>> getNationIntensityAtSpecificTime(
+      List<DateTime> dateTimes) async {
+    List<Intensity> intensities = [];
+    try {
+      for (DateTime dateTime in dateTimes) {
+        String rawData =
+            await api.getSpecificTimePeriodIntensity(client, dateTime);
+        Map<String, dynamic> decoded = jsonDecode(rawData)['data'][0];
+        Intensity intensity = Intensity.fromMap(decoded);
+        intensities.add(intensity);
+      }
+      return intensities;
+    } catch (e) {
+      throw Exception('Error: $e');
+    }
+  }
+
   Future<IntensityStatistics> get48hrNationalStatistics() async {
     try {
       String rawData = await api.get48hrNationalStatistics(client, now, next48);

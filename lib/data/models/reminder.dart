@@ -2,7 +2,9 @@ import 'dart:convert';
 
 import 'package:hive/hive.dart';
 
-@HiveType(typeId: 1)
+part 'reminder.g.dart';
+
+@HiveType(typeId: 0)
 class Reminder {
   @HiveField(0)
   String name;
@@ -44,19 +46,4 @@ class Reminder {
   @override
   String toString() =>
       'Reminder(name: $name, createdAt: $createdAt, dueAt: $dueAt)';
-}
-
-class ReminderAdapter extends TypeAdapter<Reminder> {
-  @override
-  final typeId = 1;
-
-  @override
-  Reminder read(BinaryReader reader) {
-    return Reminder();
-  }
-
-  @override
-  void write(BinaryWriter writer, Reminder obj) {
-    writer.write(obj.name);
-  }
 }

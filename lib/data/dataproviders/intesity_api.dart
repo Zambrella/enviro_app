@@ -37,4 +37,15 @@ class IntensityApi {
       throw Exception('Failed to load data');
     }
   }
+
+  Future<String> getSpecificTimePeriodIntensity(
+      http.Client client, DateTime dateTime) async {
+    var _url = '$baseURL/intensity/${dateTime.toIso8601String()}';
+    var response = await (client.get(_url));
+    if (response.statusCode == 200) {
+      return response.body;
+    } else {
+      throw Exception('Failed to load data');
+    }
+  }
 }
