@@ -49,6 +49,18 @@ class IntensityRepository {
     }
   }
 
+  Future<Intensity> getNationalIntensityForReminder(DateTime dateTime) async {
+    try {
+      String rawData =
+          await api.getSpecificTimePeriodIntensity(client, dateTime);
+      Map<String, dynamic> decoded = jsonDecode(rawData)['data'][0];
+      Intensity intensity = Intensity.fromMap(decoded);
+      return intensity;
+    } catch (e) {
+      throw Exception('Error: $e');
+    }
+  }
+
   Future<IntensityStatistics> get48hrNationalStatistics() async {
     try {
       String rawData = await api.get48hrNationalStatistics(client, now, next48);

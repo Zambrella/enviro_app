@@ -25,10 +25,10 @@ class IntensityCubit extends Cubit<IntensityState> {
     );
   }
 
-  void loadSpecificTimeIntensityData(List<DateTime> dateTimes) async {
+  void loadSpecificTimeIntensityData(DateTime dateTime) async {
     emit(IntensityFetchInProgress());
-    final List<Intensity> intensities =
-        await repo.getNationIntensityAtSpecificTime(dateTimes);
-    emit(IntensitySpecificTimePeriodSuccess(intensities: intensities));
+    final Intensity intensitiy =
+        await repo.getNationalIntensityForReminder(dateTime);
+    emit(IntensitySpecificTimePeriodSuccess(intensity: intensitiy));
   }
 }

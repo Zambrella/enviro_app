@@ -1,6 +1,10 @@
+import 'package:enviro_app/business_logic/cubit/intensity_cubit.dart';
 import 'package:enviro_app/constants/functions.dart';
 import 'package:enviro_app/constants/ui_constants.dart';
+import 'package:enviro_app/data/models/intensity.dart';
+import 'package:enviro_app/data/repositories/intensity_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
 class ReminderItem extends StatelessWidget {
@@ -88,11 +92,8 @@ class ReminderItem extends StatelessWidget {
           ),
           Column(
             children: [
-              Text(
-                intensity.toString(),
-                style: textTheme.headline6.copyWith(
-                  color: UIFunctions.getColor(intensity),
-                ),
+              IntensityData(
+                dueDate: dueDate,
               ),
               Text(
                 'gCO₂/KWh',
@@ -106,6 +107,40 @@ class ReminderItem extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class IntensityData extends StatefulWidget {
+  final DateTime dueDate;
+  IntensityData({this.dueDate});
+  @override
+  _IntensityDataState createState() => _IntensityDataState();
+}
+
+class _IntensityDataState extends State<IntensityData> {
+  IntensityRepository repo;
+
+  @override
+  void initState() {
+    super.initState();
+    repo = IntensityRepository();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    var textTheme = Theme.of(context).textTheme;
+    return FutureBuilder(
+      future: repo.getNationalIntensityForReminder(widget.dueDate),
+      initialData: Intensity(forecast: 0),
+      builder: (context, AsyncSnapshot<Intensity> snapshot) {
+        return Text(
+          snapshot.data.forecast.toString(),
+          style: textTheme.headline6.copyWith(
+            color: UIFunctions.getColor(snapshot.data.forecast),
+          ),
+        );
+      },
     );
   }
 }
