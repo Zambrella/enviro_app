@@ -50,9 +50,8 @@ class _ReminderPageState extends State<ReminderPage> {
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 16, vertical: 12.0),
                             child: ReminderItem(
-                              title: 'This is a title ' +
-                                  Random().nextInt(10).toString(),
-                              dueDate: DateTime.now().add(Duration(hours: 1)),
+                              title: state.reminders[index].name,
+                              dueDate: state.reminders[index].dueAt,
                               intensity: 201,
                               onTap: () {
                                 context
