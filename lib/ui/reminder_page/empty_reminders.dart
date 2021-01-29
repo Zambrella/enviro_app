@@ -15,14 +15,6 @@ class EmptyReminders extends StatelessWidget {
             style: Theme.of(context).textTheme.bodyText2.copyWith(
                 fontSize: 28, color: kSecondaryTextColor.withOpacity(0.5)),
           ),
-          SizedBox(
-            height: 16,
-          ),
-          Icon(
-            Icons.arrow_downward,
-            size: 50,
-            color: kSecondaryTextColor.withOpacity(0.5),
-          ),
         ],
       ),
     );

@@ -12,6 +12,7 @@ class RemindersCubit extends Cubit<RemindersState> {
   void getReminders() {
     List<Reminder> reminders = repo.getAllReminders();
     if (reminders.isNotEmpty) {
+      reminders.sort((a, b) => a.dueAt.compareTo(b.dueAt));
       emit(RemindersUpdated(
         reminders: reminders,
       ));

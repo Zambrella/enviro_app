@@ -1,4 +1,5 @@
 import 'package:enviro_app/business_logic/cubit/reminders_cubit.dart';
+import 'package:enviro_app/constants/ui_constants.dart';
 import 'package:enviro_app/ui/global_widgets/primary_button.dart';
 import 'package:enviro_app/ui/reminder_page/add_reminder_modal.dart';
 import 'package:enviro_app/ui/reminder_page/empty_reminders.dart';
@@ -33,6 +34,7 @@ class _ReminderPageState extends State<ReminderPage> {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    // Might look better to have this as a Sliver bar so it scrolls as well
                     Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: Text(
@@ -73,23 +75,44 @@ class _ReminderPageState extends State<ReminderPage> {
             },
           ),
           Align(
-            alignment: Alignment.bottomCenter,
+            alignment: Alignment.bottomRight,
             child: Padding(
               padding: const EdgeInsets.all(16.0),
-              child: PrimaryButton(
-                label: 'Add Reminder',
-                active: true,
-                function: () {
-                  showDialog(
-                      context: context,
-                      builder: (context) {
-                        return AddReminderModal();
-                      });
-                },
-              ),
+              child: CustomFAB(),
             ),
           )
         ],
+      ),
+    );
+  }
+}
+
+class CustomFAB extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        showDialog(
+            context: context,
+            builder: (context) {
+              return AddReminderModal();
+            });
+      },
+      child: Container(
+        padding: EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: kSecondaryColor,
+          boxShadow: [
+            BoxShadow(
+              color: kSecondaryColor.withOpacity(0.40),
+              blurRadius: 4.0,
+              spreadRadius: 1.0,
+              offset: Offset(0, 2),
+            ),
+          ],
+        ),
+        child: Icon(Icons.add),
       ),
     );
   }
