@@ -7,6 +7,8 @@ import 'package:intl/intl.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AddReminderModal extends StatefulWidget {
+  final DateTime startDateTime;
+  AddReminderModal({this.startDateTime});
   @override
   _AddReminderModalState createState() => _AddReminderModalState();
 }
@@ -23,7 +25,8 @@ class _AddReminderModalState extends State<AddReminderModal> {
   void initState() {
     super.initState();
     // Set default value to now
-    _dueDate = DateTime.now();
+    //? There might be a better way to do this, potentially using named constructor (default constructor takes now, named constructor takes a datetime)
+    _dueDate = widget.startDateTime ?? DateTime.now();
     // Initialise controllers
     _reminderNameController = TextEditingController();
     _dueDateController = TextEditingController();

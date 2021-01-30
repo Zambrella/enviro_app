@@ -1,4 +1,5 @@
 import 'package:enviro_app/data/models/reminder.dart';
+import 'package:enviro_app/ui/reminder_page/add_reminder_modal.dart';
 
 import '../../business_logic/cubit/intensity_cubit.dart';
 import '../../constants/functions.dart';
@@ -54,14 +55,25 @@ class _IntensityPageGraphState extends State<IntensityPageGraph> {
                   }
                 }
 
-                return GraphBar(
-                  barHeight: _totalHeight,
-                  barWidth: _barWidth,
-                  dateTime: state.timeSelection[index].from,
-                  primaryBarHeight: _totalHeight *
-                      (state.timeSelection[index].intensityAverage / 600),
-                  hasReminder: hasReminder(),
-                  intensity: state.timeSelection[index].intensityAverage,
+                return GestureDetector(
+                  onTap: () {
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AddReminderModal(
+                            startDateTime: state.timeSelection[index].from,
+                          );
+                        });
+                  },
+                  child: GraphBar(
+                    barHeight: _totalHeight,
+                    barWidth: _barWidth,
+                    dateTime: state.timeSelection[index].from,
+                    primaryBarHeight: _totalHeight *
+                        (state.timeSelection[index].intensityAverage / 600),
+                    hasReminder: hasReminder(),
+                    intensity: state.timeSelection[index].intensityAverage,
+                  ),
                 );
               },
             );
