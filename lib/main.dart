@@ -1,6 +1,7 @@
 import 'package:enviro_app/business_logic/cubit/reminders_cubit.dart';
 import 'package:enviro_app/data/repositories/reminder_repository.dart';
 import 'package:enviro_app/ui/theme/input_decoration_theme.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -17,11 +18,48 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  //* Hive stuff
   await Hive.initFlutter();
   Hive.registerAdapter<Reminder>(ReminderAdapter());
   // Don't have to pass this as an object as it be accessed by name later
   // This just opens it so it can be accessed later
   await Hive.openBox<Reminder>('reminders');
+
+  //* Notification stuff
+  //* Callbacks
+  Future selectNotification(String payload) async {
+    if (payload != null) {
+      print('$payload');
+    }
+  }
+
+  //* Android specific
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
+  // initialise the plugin. app_icon needs to be a added as a drawable resource to the Android head project
+  // https://stackoverflow.com/questions/55820299/dont-know-what-file-error-is-referring-to-in-flutter-local-notifications-plugin
+  const AndroidInitializationSettings initializationSettingsAndroid =
+      AndroidInitializationSettings('@mipmap/ic_launcher');
+
+  //* iOS specific
+  final IOSInitializationSettings initializationSettingsIOS =
+      IOSInitializationSettings(
+    requestSoundPermission: false,
+    requestBadgePermission: false,
+    requestAlertPermission: false,
+  );
+
+  //* Final steps
+  final InitializationSettings initializationSettings = InitializationSettings(
+    android: initializationSettingsAndroid,
+    iOS: initializationSettingsIOS,
+  );
+  await flutterLocalNotificationsPlugin.initialize(initializationSettings,
+      onSelectNotification: selectNotification);
+
+  //* Run App
   runApp(MyApp());
 }
 

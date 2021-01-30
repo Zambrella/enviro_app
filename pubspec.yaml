@@ -14,6 +14,7 @@ dependencies:
   charts_flutter: ^0.9.0
   cupertino_icons: ^1.0.1
   flutter_bloc: ^6.1.1
+  flutter_local_notifications: ^4.0.0
   hive: ^1.4.4+1
   hive_flutter: ^0.3.1
   hive_generator: ^0.8.2
