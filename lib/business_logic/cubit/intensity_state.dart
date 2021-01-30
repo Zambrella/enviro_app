@@ -9,8 +9,12 @@ class IntensityFetchSuccess extends IntensityState {
   final Intensity intensity;
   final IntensityStatistics intensityStatistics;
   final List<TimeSection> timeSelection;
+  final List<Reminder> reminders;
   IntensityFetchSuccess(
-      {this.intensity, this.intensityStatistics, this.timeSelection});
+      {this.intensity,
+      this.intensityStatistics,
+      this.timeSelection,
+      this.reminders});
 }
 
 class IntensitySpecificTimePeriodSuccess extends IntensityState {

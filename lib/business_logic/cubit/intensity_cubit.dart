@@ -1,4 +1,6 @@
 import 'package:bloc/bloc.dart';
+import 'package:enviro_app/data/models/reminder.dart';
+import 'package:enviro_app/data/repositories/reminder_repository.dart';
 import '../../data/models/intensity.dart';
 import '../../data/models/statistics.dart';
 import '../../data/models/time_section.dart';
@@ -9,18 +11,22 @@ part 'intensity_state.dart';
 
 class IntensityCubit extends Cubit<IntensityState> {
   final IntensityRepository repo;
-  IntensityCubit({@required this.repo}) : super(IntensityInitial());
+  final ReminderRepository reminderRepo;
+  IntensityCubit({@required this.repo, this.reminderRepo})
+      : super(IntensityInitial());
 
   void loadNationalIntensityData() async {
     emit(IntensityFetchInProgress());
     final intensity = await repo.getNationalIntesity();
     final intensityStats = await repo.get48hrNationalStatistics();
     final timeSelection = await repo.getTimeSections();
+    final reminders = reminderRepo.getAllReminders();
     emit(
       IntensityFetchSuccess(
         intensity: intensity,
         intensityStatistics: intensityStats,
         timeSelection: timeSelection,
+        reminders: reminders,
       ),
     );
   }

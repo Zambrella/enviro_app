@@ -1,3 +1,5 @@
+import 'package:enviro_app/data/models/reminder.dart';
+
 import '../../business_logic/cubit/intensity_cubit.dart';
 import '../../constants/functions.dart';
 import 'package:flutter/material.dart';
@@ -30,13 +32,35 @@ class _IntensityPageGraphState extends State<IntensityPageGraph> {
               scrollDirection: Axis.horizontal,
               itemCount: state.timeSelection.length,
               itemBuilder: (context, index) {
+                // Helper function to check whether a time section has a reminder
+                bool hasReminder() {
+                  int hasReminder = 0;
+
+                  // Iterate through each reminder to see if it falls within a given time selection
+                  for (Reminder reminder in state.reminders) {
+                    if (reminder.dueAt
+                            .isAfter(state.timeSelection[index].from) &&
+                        reminder.dueAt
+                            .isBefore(state.timeSelection[index].to)) {
+                      hasReminder++;
+                    }
+                  }
+
+                  // If the value has been increased then it must have a reminder
+                  if (hasReminder > 0) {
+                    return true;
+                  } else {
+                    return false;
+                  }
+                }
+
                 return GraphBar(
                   barHeight: _totalHeight,
                   barWidth: _barWidth,
                   dateTime: state.timeSelection[index].from,
                   primaryBarHeight: _totalHeight *
                       (state.timeSelection[index].intensityAverage / 600),
-                  hasReminder: false,
+                  hasReminder: hasReminder(),
                   intensity: state.timeSelection[index].intensityAverage,
                 );
               },

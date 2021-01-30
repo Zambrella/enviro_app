@@ -26,23 +26,27 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
+  final intensityRepo = IntensityRepository();
+  final generationRepo = GenerationRepository();
+  final reminderRepo = ReminderRepository();
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
           create: (context) => IntensityCubit(
-            repo: IntensityRepository(),
+            repo: intensityRepo,
+            reminderRepo: reminderRepo,
           ),
         ),
         BlocProvider(
           create: (context) => GenerationCubit(
-            repo: GenerationRepository(),
+            repo: generationRepo,
           ),
         ),
         BlocProvider(
           create: (context) => RemindersCubit(
-            repo: ReminderRepository(),
+            repo: reminderRepo,
           ),
         )
       ],
