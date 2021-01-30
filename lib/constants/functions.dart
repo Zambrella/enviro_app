@@ -4,22 +4,18 @@ import 'package:flutter/material.dart';
 import 'enums.dart';
 
 class UIFunctions {
-  /// 0 - 99 = very low
-  /// 100 - 179 = low
-  /// 180 - 249 = moderate
-  /// 250 - 349 = high
-  /// 350+ = very high
+  // These are defined in the Forecast Methodology paper
   static Color getColor(int value) {
-    if (value <= 99) {
+    if (value <= 59) {
       // very low
       return kVeryLow;
-    } else if (value >= 100 && value <= 179) {
+    } else if (value >= 60 && value <= 159) {
       // low
       return kLow;
-    } else if (value >= 180 && value <= 249) {
+    } else if (value >= 160 && value <= 259) {
       // moderate
       return kModerate;
-    } else if (value >= 250 && value <= 349) {
+    } else if (value >= 260 && value <= 359) {
       // high
       return kHigh;
     } else {

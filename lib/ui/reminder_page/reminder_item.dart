@@ -1,10 +1,8 @@
-import 'package:enviro_app/business_logic/cubit/intensity_cubit.dart';
 import 'package:enviro_app/constants/functions.dart';
 import 'package:enviro_app/constants/ui_constants.dart';
 import 'package:enviro_app/data/models/intensity.dart';
 import 'package:enviro_app/data/repositories/intensity_repository.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
 class ReminderItem extends StatelessWidget {

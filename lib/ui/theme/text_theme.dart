@@ -31,6 +31,7 @@ const TextTheme kTextTheme = const TextTheme(
     fontSize: 14,
     fontWeight: FontWeight.w400,
     color: kPrimaryTextColor,
+    height: 1.4,
   ),
   bodyText2: TextStyle(
     fontFamily: 'Lato',

@@ -19,6 +19,7 @@ dependencies:
   hive_generator: ^0.8.2
   http: ^0.12.2
   intl: ^0.16.1
+  url_launcher: ^5.7.10
 
 dev_dependencies:
   flutter_test:
@@ -66,9 +67,8 @@ flutter:
           style: italic
           weight: 100
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+    - assets/images/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
   # For details regarding adding assets from package dependencies, see

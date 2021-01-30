@@ -47,8 +47,8 @@ class _HomePageState extends State<HomePage> {
               label: 'Reminders',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.settings),
-              label: 'Settings',
+              icon: Icon(Icons.info),
+              label: 'About',
             ),
           ],
         ),

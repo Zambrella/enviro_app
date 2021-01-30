@@ -11,7 +11,7 @@ const Color kErrorColor = Color(0xffB23A51);
 
 // Traffic light colors
 const Color kVeryLow = Color(0xff1C946B);
-const Color kLow = Color(0xff7FFF00);
+const Color kLow = Color(0xff41CD8C);
 const Color kModerate = Color(0xffFFA500);
 const Color kHigh = Color(0xffEF6C00);
 const Color kVeryHigh = Color(0xffB23A51);
