@@ -55,9 +55,8 @@ class _ReminderPageState extends State<ReminderPage> {
                               dueDate: state.reminders[index].dueAt,
                               intensity: 201,
                               onTap: () {
-                                context
-                                    .read<RemindersCubit>()
-                                    .deleteReminder(index);
+                                context.read<RemindersCubit>().deleteReminder(
+                                    index, state.reminders[index]);
                               },
                             ),
                           );

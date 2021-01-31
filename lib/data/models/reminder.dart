@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:hive/hive.dart';
+import 'dart:math';
 
 part 'reminder.g.dart';
 
@@ -14,11 +15,17 @@ class Reminder {
 
   @HiveField(2)
   DateTime dueAt;
+
+  @HiveField(3)
+  int uid;
+
   Reminder({
     this.name,
     this.createdAt,
     this.dueAt,
-  });
+  }) {
+    this.uid = Random().nextInt(999999);
+  }
 
   Map<String, dynamic> toMap() {
     return {
@@ -45,5 +52,5 @@ class Reminder {
 
   @override
   String toString() =>
-      'Reminder(name: $name, createdAt: $createdAt, dueAt: $dueAt)';
+      'Reminder(name: $name, createdAt: $createdAt, dueAt: $dueAt, uid: $uid)';
 }

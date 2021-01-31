@@ -3,11 +3,8 @@ import 'package:enviro_app/constants/ui_constants.dart';
 import 'package:enviro_app/data/models/reminder.dart';
 import 'package:enviro_app/ui/global_widgets/primary_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:timezone/data/latest.dart' as tz;
-import 'package:timezone/timezone.dart' as tz;
 
 class AddReminderModal extends StatefulWidget {
   final DateTime startDateTime;
@@ -179,33 +176,16 @@ class _AddReminderModalState extends State<AddReminderModal> {
                         label: 'Add',
                         active: true,
                         function: () async {
+                          // Need due date to not be in the past so if it's in the past setting it to now
+                          if (_dueDate.isBefore(DateTime.now())) {
+                            _dueDate = DateTime.now().add(Duration(minutes: 1));
+                          }
                           context.read<RemindersCubit>().addNewReminder(
                                 Reminder(
                                     name: _reminderNameController.text,
                                     createdAt: DateTime.now(),
                                     dueAt: _dueDate),
                               );
-                          const AndroidNotificationDetails
-                              androidPlatformChannelSpecifics =
-                              AndroidNotificationDetails(
-                                  '1', 'Test name', 'Test description',
-                                  importance: Importance.max,
-                                  priority: Priority.high);
-                          const NotificationDetails platformChannelSpecifics =
-                              NotificationDetails(
-                                  android: androidPlatformChannelSpecifics);
-                          await FlutterLocalNotificationsPlugin().zonedSchedule(
-                            0,
-                            _reminderNameController.text,
-                            'You have a reminder',
-                            tz.TZDateTime.utc(_dueDate.year, _dueDate.month,
-                                _dueDate.day, _dueDate.hour, _dueDate.minute),
-                            platformChannelSpecifics,
-                            uiLocalNotificationDateInterpretation:
-                                UILocalNotificationDateInterpretation
-                                    .absoluteTime,
-                            androidAllowWhileIdle: true,
-                          );
 
                           // Close the modal on submissions
                           Navigator.pop(context);
