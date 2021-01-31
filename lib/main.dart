@@ -41,7 +41,7 @@ void main() async {
   // initialise the plugin. app_icon needs to be a added as a drawable resource to the Android head project
   // https://stackoverflow.com/questions/55820299/dont-know-what-file-error-is-referring-to-in-flutter-local-notifications-plugin
   const AndroidInitializationSettings initializationSettingsAndroid =
-      AndroidInitializationSettings('@mipmap/ic_launcher');
+      AndroidInitializationSettings('app_icon'); // Don't include the .png
 
   //* iOS specific
   final IOSInitializationSettings initializationSettingsIOS =

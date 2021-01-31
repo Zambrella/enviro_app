@@ -14,8 +14,12 @@ class RemindersCubit extends Cubit<RemindersState> {
   // Reminder notification setup
   static const AndroidNotificationDetails androidPlatformChannelSpecifics =
       AndroidNotificationDetails(
-          '1', 'Reminders', 'All reminder based notifications',
-          importance: Importance.max, priority: Priority.high);
+    '1',
+    'Reminders',
+    'All reminder based notifications',
+    importance: Importance.max,
+    priority: Priority.high,
+  );
 
   static const IOSNotificationDetails iosNotificationDetails =
       IOSNotificationDetails();
