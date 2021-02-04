@@ -131,7 +131,7 @@ class IntensityRepository {
       }
       return timeSections;
     } catch (e) {
-      print('Error: $e');
+      // print('Error: $e');
       throw Exception('Error: $e');
     }
   }

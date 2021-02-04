@@ -25,7 +25,6 @@ class _GenerationPageState extends State<GenerationPage> {
   int _selectedIndex = 1;
 
   void _updateIndex(int index) {
-    print(index);
     switch (index) {
       case 0:
         setState(() {

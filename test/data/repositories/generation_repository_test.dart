@@ -67,7 +67,6 @@ void main() {
         //* Action
         Map<String, double> result =
             await repository.getAverageGenerationMix(from: from, to: to);
-        print('Test: $result');
 
         //* Result
         expect(result, isA<Map<String, double>>());
@@ -87,7 +86,6 @@ void main() {
         //* Action
         Map<String, double> result =
             await repository.getAverageGenerationMix(from: from, to: to);
-        print('Test: $result');
 
         //* Result
         expect(result['coal'], equals(0.575));

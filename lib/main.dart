@@ -31,7 +31,7 @@ void main() async {
   //* Callbacks
   Future selectNotification(String payload) async {
     if (payload != null) {
-      print('$payload');
+      // print('$payload');
     }
   }
 
@@ -89,6 +89,7 @@ class MyApp extends StatelessWidget {
         )
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
           fontFamily: 'Lato',
           primaryColor: kPrimaryColor,
