@@ -2,8 +2,11 @@ import '../../business_logic/cubit/intensity_cubit.dart';
 import '../../constants/functions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'dart:math';
 
 class IntensityPageStats extends StatefulWidget {
+  final ScrollController scrollController;
+  IntensityPageStats({this.scrollController});
   @override
   _IntensityPageStatsState createState() => _IntensityPageStatsState();
 }
@@ -17,6 +20,8 @@ class _IntensityPageStatsState extends State<IntensityPageStats>
   Animation<int> _averageAnimation;
   Animation<int> _maxAnimation;
   Animation<int> _minAnimation;
+  int _indexOfMinTimeSection;
+  int _indexOfMaxTimeSection;
 
   @override
   void initState() {
@@ -29,6 +34,8 @@ class _IntensityPageStatsState extends State<IntensityPageStats>
     _averageAnimation = _intTweenAverage.animate(_textAnimationController);
     _maxAnimation = _intTweenMax.animate(_textAnimationController);
     _minAnimation = _intTweenMin.animate(_textAnimationController);
+    _indexOfMinTimeSection = 1;
+    _indexOfMaxTimeSection = 1;
   }
 
   @override
@@ -49,6 +56,19 @@ class _IntensityPageStatsState extends State<IntensityPageStats>
 
           // Set the animation rolling after the data has loaded
           _textAnimationController.forward();
+
+          // Get the index of min average
+          // Get the list of averages for each time selection
+          var averages =
+              state.timeSelection.map((e) => e.intensityAverage).toList();
+          // Get the index where the list of time selections matches the min
+          _indexOfMinTimeSection = state.timeSelection.indexWhere((element) {
+            return element.intensityAverage == averages.reduce(min);
+          });
+          // Get the index where the list of time selections matches the max
+          _indexOfMaxTimeSection = state.timeSelection.indexWhere((element) {
+            return element.intensityAverage == averages.reduce(max);
+          });
         }
       },
       child: Expanded(
@@ -67,18 +87,30 @@ class _IntensityPageStatsState extends State<IntensityPageStats>
             AnimatedBuilder(
               animation: _maxAnimation,
               builder: (context, child) {
-                return SingleStatistic(
-                  value: _maxAnimation.value,
-                  label: 'max',
+                return InkWell(
+                  onTap: () => widget.scrollController.animateTo(
+                      _indexOfMaxTimeSection * 64.0,
+                      duration: Duration(milliseconds: 800),
+                      curve: Curves.easeIn),
+                  child: SingleStatistic(
+                    value: _maxAnimation.value,
+                    label: 'max',
+                  ),
                 );
               },
             ),
             AnimatedBuilder(
               animation: _minAnimation,
               builder: (context, child) {
-                return SingleStatistic(
-                  value: _minAnimation.value,
-                  label: 'min',
+                return InkWell(
+                  onTap: () => widget.scrollController.animateTo(
+                      _indexOfMinTimeSection * 64.0,
+                      duration: Duration(milliseconds: 800),
+                      curve: Curves.easeIn),
+                  child: SingleStatistic(
+                    value: _minAnimation.value,
+                    label: 'min',
+                  ),
                 );
               },
             ),

@@ -12,10 +12,18 @@ class IntensityPage extends StatefulWidget {
 }
 
 class _IntensityPageState extends State<IntensityPage> {
+  ScrollController _scrollController;
   @override
   void initState() {
     super.initState();
     context.read<IntensityCubit>().loadNationalIntensityData();
+    _scrollController = ScrollController();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _scrollController.dispose();
   }
 
   @override
@@ -25,8 +33,12 @@ class _IntensityPageState extends State<IntensityPage> {
       children: [
         IntensityPageHeader(),
         IntensityPageGraphHeader(),
-        IntensityPageGraph(),
-        IntensityPageStats(),
+        IntensityPageGraph(
+          scrollController: _scrollController,
+        ),
+        IntensityPageStats(
+          scrollController: _scrollController,
+        ),
       ],
     );
   }

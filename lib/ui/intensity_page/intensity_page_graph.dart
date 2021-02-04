@@ -8,6 +8,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
 class IntensityPageGraph extends StatefulWidget {
+  final ScrollController scrollController;
+  IntensityPageGraph({this.scrollController});
   @override
   _IntensityPageGraphState createState() => _IntensityPageGraphState();
 }
@@ -31,6 +33,7 @@ class _IntensityPageGraphState extends State<IntensityPageGraph> {
             return ListView.builder(
               physics: BouncingScrollPhysics(),
               scrollDirection: Axis.horizontal,
+              controller: widget.scrollController,
               itemCount: state.timeSelection.length,
               itemBuilder: (context, index) {
                 // Helper function to check whether a time section has a reminder

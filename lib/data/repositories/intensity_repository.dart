@@ -91,7 +91,6 @@ class IntensityRepository {
     // First step is to get all the Intensity objects within the 48 hr time period
     var intensities = await get48hrNationalIntensity();
     // Next is to round down to the nearest 30 minutes because API spits data out on the hour and 30 past hour
-    // Todo: Get it to round down to nearest even hour
     var now;
     var nearestHour = DateTime.now().roundDown();
     if (nearestHour.hour.isEven) {
