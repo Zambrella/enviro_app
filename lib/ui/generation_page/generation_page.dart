@@ -24,6 +24,36 @@ class _GenerationPageState extends State<GenerationPage> {
   // Index to hold what date period is selected
   int _selectedIndex = 1;
 
+  void _updateIndex(int index) {
+    print(index);
+    switch (index) {
+      case 0:
+        setState(() {
+          _selectedIndex = 0;
+        });
+        context.read<GenerationCubit>().loadGenerationData(
+            from: DateTime.now().subtract(Duration(days: 1)),
+            to: DateTime.now());
+        break;
+      case 1:
+        setState(() {
+          _selectedIndex = 1;
+        });
+        context.read<GenerationCubit>().loadGenerationData(
+            from: DateTime.now().subtract(Duration(days: 7)),
+            to: DateTime.now());
+        break;
+      case 2:
+        setState(() {
+          _selectedIndex = 2;
+        });
+        context.read<GenerationCubit>().loadGenerationData(
+            from: DateTime.now().subtract(Duration(days: 28)),
+            to: DateTime.now());
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -34,38 +64,17 @@ class _GenerationPageState extends State<GenerationPage> {
             SelectButton(
               buttonText: 'Past Day',
               isSelected: _selectedIndex == 0,
-              buttonFunction: () {
-                setState(() {
-                  _selectedIndex = 0;
-                });
-                context.read<GenerationCubit>().loadGenerationData(
-                    from: DateTime.now().subtract(Duration(days: 1)),
-                    to: DateTime.now());
-              },
+              buttonFunction: () => _updateIndex(0),
             ),
             SelectButton(
               buttonText: 'Past 7 Days',
               isSelected: _selectedIndex == 1,
-              buttonFunction: () {
-                setState(() {
-                  _selectedIndex = 1;
-                });
-                context.read<GenerationCubit>().loadGenerationData(
-                    from: DateTime.now().subtract(Duration(days: 7)),
-                    to: DateTime.now());
-              },
+              buttonFunction: () => _updateIndex(1),
             ),
             SelectButton(
               buttonText: 'Past 28 Days',
               isSelected: _selectedIndex == 2,
-              buttonFunction: () {
-                setState(() {
-                  _selectedIndex = 2;
-                });
-                context.read<GenerationCubit>().loadGenerationData(
-                    from: DateTime.now().subtract(Duration(days: 28)),
-                    to: DateTime.now());
-              },
+              buttonFunction: () => _updateIndex(2),
             ),
           ],
         ),
@@ -96,36 +105,51 @@ class _GenerationPageState extends State<GenerationPage> {
               ];
 
               return Expanded(
-                child: Container(
-                  padding: EdgeInsets.all(8),
-                  child: charts.PieChart(
-                    series,
-                    animate: true,
-                    defaultRenderer: charts.ArcRendererConfig(
-                      arcWidth: 80,
-                      arcRendererDecorators: [
-                        charts.ArcLabelDecorator(
-                          leaderLineStyleSpec:
-                              charts.ArcLabelLeaderLineStyleSpec(
-                                  thickness: 1,
-                                  length: 20,
-                                  color: charts.ColorUtil.fromDartColor(
-                                      kSecondaryTextColor)),
-                          labelPosition: charts.ArcLabelPosition.auto,
-                          insideLabelStyleSpec: charts.TextStyleSpec(
-                            fontFamily: 'Lato',
-                            fontSize: 12,
-                            color: charts.ColorUtil.fromDartColor(Colors.white),
-                            // Font weight not supported at the moment
-                          ),
-                          outsideLabelStyleSpec: charts.TextStyleSpec(
-                            fontFamily: 'Lato',
-                            fontSize: 12,
-                            color: charts.ColorUtil.fromDartColor(
-                                kPrimaryTextColor),
-                          ),
-                        )
-                      ],
+                child: GestureDetector(
+                  onHorizontalDragEnd: (details) {
+                    // Swipe left to right
+                    if (details.primaryVelocity > 0 && _selectedIndex != 0) {
+                      _selectedIndex--;
+                      _updateIndex(_selectedIndex);
+                    }
+                    // Swipe right to left
+                    if (details.primaryVelocity < 0 && _selectedIndex != 2) {
+                      _selectedIndex++;
+                      _updateIndex(_selectedIndex);
+                    }
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(8),
+                    child: charts.PieChart(
+                      series,
+                      animate: true,
+                      defaultRenderer: charts.ArcRendererConfig(
+                        arcWidth: 80,
+                        arcRendererDecorators: [
+                          charts.ArcLabelDecorator(
+                            leaderLineStyleSpec:
+                                charts.ArcLabelLeaderLineStyleSpec(
+                                    thickness: 1,
+                                    length: 20,
+                                    color: charts.ColorUtil.fromDartColor(
+                                        kSecondaryTextColor)),
+                            labelPosition: charts.ArcLabelPosition.auto,
+                            insideLabelStyleSpec: charts.TextStyleSpec(
+                              fontFamily: 'Lato',
+                              fontSize: 12,
+                              color:
+                                  charts.ColorUtil.fromDartColor(Colors.white),
+                              // Font weight not supported at the moment
+                            ),
+                            outsideLabelStyleSpec: charts.TextStyleSpec(
+                              fontFamily: 'Lato',
+                              fontSize: 12,
+                              color: charts.ColorUtil.fromDartColor(
+                                  kPrimaryTextColor),
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),
