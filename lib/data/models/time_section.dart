@@ -21,6 +21,9 @@ class TimeSection {
       sum += intensity.forecast;
       count++;
     }
+    if (sum == 0) {
+      return 0;
+    }
     return (sum / count).round();
   }
 }

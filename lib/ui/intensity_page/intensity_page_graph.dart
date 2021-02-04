@@ -30,55 +30,87 @@ class _IntensityPageGraphState extends State<IntensityPageGraph> {
       child: BlocBuilder<IntensityCubit, IntensityState>(
         builder: (context, state) {
           if (state is IntensityFetchSuccess) {
-            return ListView.builder(
-              physics: BouncingScrollPhysics(),
-              scrollDirection: Axis.horizontal,
-              controller: widget.scrollController,
-              itemCount: state.timeSelection.length,
-              itemBuilder: (context, index) {
-                // Helper function to check whether a time section has a reminder
-                bool hasReminder() {
-                  int hasReminder = 0;
+            return Stack(
+              children: [
+                // GraphLine(),
+                // Positioned(
+                //   bottom: _GraphBarState.dayTextHeight +
+                //       _GraphBarState.hourTextHeight,
+                //   child: GraphLine(),
+                // ),
+                // Positioned(
+                //   top: (_totalHeight -
+                //           (_GraphBarState.dayTextHeight +
+                //               _GraphBarState.hourTextHeight)) /
+                //       2,
+                //   child: GraphLine(),
+                // ),
+                // Positioned(
+                //   top: (_totalHeight -
+                //           (_GraphBarState.dayTextHeight +
+                //               _GraphBarState.hourTextHeight)) /
+                //       4,
+                //   child: GraphLine(),
+                // ),
+                // Positioned(
+                //   top: (_totalHeight -
+                //           (_GraphBarState.dayTextHeight +
+                //               _GraphBarState.hourTextHeight)) /
+                //       4 *
+                //       3,
+                //   child: GraphLine(),
+                // ),
+                ListView.builder(
+                  physics: BouncingScrollPhysics(),
+                  scrollDirection: Axis.horizontal,
+                  controller: widget.scrollController,
+                  itemCount: state.timeSelection.length,
+                  itemBuilder: (context, index) {
+                    // Helper function to check whether a time section has a reminder
+                    bool hasReminder() {
+                      int hasReminder = 0;
 
-                  // Iterate through each reminder to see if it falls within a given time selection
-                  for (Reminder reminder in state.reminders) {
-                    if (reminder.dueAt
-                            .isAfter(state.timeSelection[index].from) &&
-                        reminder.dueAt
-                            .isBefore(state.timeSelection[index].to)) {
-                      hasReminder++;
+                      // Iterate through each reminder to see if it falls within a given time selection
+                      for (Reminder reminder in state.reminders) {
+                        if (reminder.dueAt
+                                .isAfter(state.timeSelection[index].from) &&
+                            reminder.dueAt
+                                .isBefore(state.timeSelection[index].to)) {
+                          hasReminder++;
+                        }
+                      }
+
+                      // If the value has been increased then it must have a reminder
+                      if (hasReminder > 0) {
+                        return true;
+                      } else {
+                        return false;
+                      }
                     }
-                  }
 
-                  // If the value has been increased then it must have a reminder
-                  if (hasReminder > 0) {
-                    return true;
-                  } else {
-                    return false;
-                  }
-                }
-
-                return GestureDetector(
-                  onTap: () {
-                    showDialog(
-                        context: context,
-                        builder: (context) {
-                          return AddReminderModal(
-                            startDateTime: state.timeSelection[index].from,
-                          );
-                        });
+                    return GestureDetector(
+                      onTap: () {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AddReminderModal(
+                                startDateTime: state.timeSelection[index].from,
+                              );
+                            });
+                      },
+                      child: GraphBar(
+                        barHeight: _totalHeight,
+                        barWidth: _barWidth,
+                        dateTime: state.timeSelection[index].from,
+                        primaryBarHeight: _totalHeight *
+                            (state.timeSelection[index].intensityAverage / 600),
+                        hasReminder: hasReminder(),
+                        intensity: state.timeSelection[index].intensityAverage,
+                      ),
+                    );
                   },
-                  child: GraphBar(
-                    barHeight: _totalHeight,
-                    barWidth: _barWidth,
-                    dateTime: state.timeSelection[index].from,
-                    primaryBarHeight: _totalHeight *
-                        (state.timeSelection[index].intensityAverage / 600),
-                    hasReminder: hasReminder(),
-                    intensity: state.timeSelection[index].intensityAverage,
-                  ),
-                );
-              },
+                ),
+              ],
             );
           } else
             return Center(child: CircularProgressIndicator());
@@ -199,6 +231,17 @@ class _GraphBarState extends State<GraphBar> {
               : Text(' '),
         ),
       ],
+    );
+  }
+}
+
+class GraphLine extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      height: 1,
+      color: Colors.grey.withOpacity(0.2),
     );
   }
 }
