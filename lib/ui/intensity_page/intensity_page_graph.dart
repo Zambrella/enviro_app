@@ -110,9 +110,9 @@ class GraphBar extends StatefulWidget {
 }
 
 class _GraphBarState extends State<GraphBar> {
-  final double hourTextHeight = 25;
+  static final double hourTextHeight = 25;
 
-  final double dayTextHeight = 20;
+  static final double dayTextHeight = 20;
 
   // Initial value for the bar height so it can animate from 0
   double _barHeight = 0;

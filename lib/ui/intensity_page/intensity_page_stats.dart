@@ -91,7 +91,7 @@ class _IntensityPageStatsState extends State<IntensityPageStats>
                   onTap: () => widget.scrollController.animateTo(
                       _indexOfMaxTimeSection * 64.0,
                       duration: Duration(milliseconds: 800),
-                      curve: Curves.easeIn),
+                      curve: Curves.easeInOutBack),
                   child: SingleStatistic(
                     value: _maxAnimation.value,
                     label: 'max',
