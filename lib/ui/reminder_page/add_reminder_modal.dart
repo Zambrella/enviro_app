@@ -53,6 +53,39 @@ class _AddReminderModalState extends State<AddReminderModal> {
     return DateFormat('h:mm a').format(dateTime);
   }
 
+  // Validation for reminder text
+  String reminderError;
+
+  // Validation for date
+  String dateError;
+
+  // validation for time
+  String timeError;
+
+  // Todo: This should be moved into a BLoC or similar
+  bool validateReminderAdd() {
+    if (_reminderNameController.text.isEmpty) {
+      setState(() {
+        reminderError = 'Reminder must not be empty';
+      });
+      return false;
+    } else if (_dueDate.isBefore(DateTime.now())) {
+      setState(() {
+        dateError = 'Due date must not be in the past';
+        reminderError = null;
+      });
+      return false;
+    } else {
+      // If everything is fine
+      setState(() {
+        reminderError = null;
+        dateError = null;
+        timeError = null;
+      });
+      return true;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
@@ -75,6 +108,7 @@ class _AddReminderModalState extends State<AddReminderModal> {
                 decoration: InputDecoration(
                   labelText: 'Reminder',
                   hintText: 'Enter reminder name',
+                  errorText: reminderError,
                 ),
               ),
               SizedBox(
@@ -88,9 +122,9 @@ class _AddReminderModalState extends State<AddReminderModal> {
                       controller: _dueDateController,
                       cursorColor: kPrimaryColor,
                       decoration: InputDecoration(
-                        labelText: 'Date',
-                        hintText: 'Select due date',
-                      ),
+                          labelText: 'Date',
+                          hintText: 'Select due date',
+                          errorText: dateError),
                       onTap: () async {
                         var _selectedDate = await showDatePicker(
                           context: context,
@@ -119,6 +153,7 @@ class _AddReminderModalState extends State<AddReminderModal> {
                       decoration: InputDecoration(
                         labelText: 'Time',
                         hintText: 'Select due time',
+                        errorText: timeError,
                       ),
                       onTap: () async {
                         var _selectedTimeOfDay = await showTimePicker(
@@ -176,19 +211,22 @@ class _AddReminderModalState extends State<AddReminderModal> {
                         label: 'Add',
                         active: true,
                         function: () async {
-                          // Need due date to not be in the past so if it's in the past setting it to now
-                          if (_dueDate.isBefore(DateTime.now())) {
-                            _dueDate = DateTime.now().add(Duration(minutes: 1));
-                          }
-                          context.read<RemindersCubit>().addNewReminder(
-                                Reminder(
-                                    name: _reminderNameController.text,
-                                    createdAt: DateTime.now(),
-                                    dueAt: _dueDate),
-                              );
+                          // Need due date to be in the future so if it's in the past setting it to now
+                          // if (_dueDate.isBefore(DateTime.now())) {
+                          //   _dueDate = DateTime.now().add(Duration(minutes: 1));
+                          // }
 
-                          // Close the modal on submissions
-                          Navigator.pop(context);
+                          if (validateReminderAdd()) {
+                            context.read<RemindersCubit>().addNewReminder(
+                                  Reminder(
+                                      name: _reminderNameController.text,
+                                      createdAt: DateTime.now(),
+                                      dueAt: _dueDate),
+                                );
+
+                            // Close the modal on submissions
+                            Navigator.pop(context);
+                          }
                         },
                       ),
                     ),
