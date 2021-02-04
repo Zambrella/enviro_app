@@ -1,0 +1,6 @@
+TimeSection(intensities: [Intensity(from: 2021-02-04 17:00:00.000Z, to: 2021-02-04 17:30:00.000Z, forecast: 224, actual: null)], to: 2021-02-04 18:00:00.000, from: 2021-02-04 16:00:00.000)
+
+TimeSection(intensities: [Intensity(from: 2021-02-04 18:00:00.000Z, to: 2021-02-04 18:30:00.000Z, forecast: 219, actual: null), Intensity(from: 2021-02-04 18:30:00.000Z, to: 2021-02-04 19:00:00.000Z, forecast: 213, actual: null), Intensity(from: 2021-02-04 19:00:00.000Z, to: 2021-02-04 19:30:00.000Z, forecast: 207, actual: null)], to: 2021-02-04 20:00:00.000, from: 2021-02-04 18:00:00.000)
+
+
+TimeSection(intensities: [Intensity(from: 2021-02-04 18:00:00.000Z, to: 2021-02-04 18:30:00.000Z, forecast: 219, actual: null), Intensity(from: 2021-02-04 18:30:00.000Z, to: 2021-02-04 19:00:00.000Z, forecast: 213, actual: null), Intensity(from: 2021-02-04 19:00:00.000Z, to: 2021-02-04 19:30:00.000Z, forecast: 207, actual: null)], to: 2021-02-04 20:00:00.000, from: 2021-02-04 18:00:00.000)

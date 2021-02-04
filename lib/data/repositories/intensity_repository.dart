@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
+
 import '../models/statistics.dart';
 import '../models/time_section.dart';
 
@@ -91,8 +93,10 @@ class IntensityRepository {
     // First step is to get all the Intensity objects within the 48 hr time period
     var intensities = await get48hrNationalIntensity();
     // Next is to round down to the nearest 30 minutes because API spits data out on the hour and 30 past hour
+    // print('Intensities: $intensities');
     var now;
     var nearestHour = DateTime.now().roundDown();
+    // print('Nearest Hour: $nearestHour');
     if (nearestHour.hour.isEven) {
       now = nearestHour;
     } else {
@@ -110,8 +114,9 @@ class IntensityRepository {
         // Create a list of Intensity objects that are between the 2 time periods
         var filteredList = intensities.where((element) {
           return (element.from.isAfter(beginTime) ||
-                  element.from.isAtSameMomentAs(beginTime)) &&
-              element.to.isBefore(endTime);
+                      element.from.isAtSameMomentAs(beginTime)) &&
+                  element.to.isBefore(endTime) ||
+              element.from.isAtSameMomentAs(endTime);
         }).toList();
 
         // Create a TimeSection object with the desired properties
