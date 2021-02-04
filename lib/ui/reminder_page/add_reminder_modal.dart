@@ -72,6 +72,7 @@ class _AddReminderModalState extends State<AddReminderModal> {
     } else if (_dueDate.isBefore(DateTime.now())) {
       setState(() {
         dateError = 'Due date must not be in the past';
+        timeError = 'Due date must not be in the past';
         reminderError = null;
       });
       return false;
@@ -211,11 +212,6 @@ class _AddReminderModalState extends State<AddReminderModal> {
                         label: 'Add',
                         active: true,
                         function: () async {
-                          // Need due date to be in the future so if it's in the past setting it to now
-                          // if (_dueDate.isBefore(DateTime.now())) {
-                          //   _dueDate = DateTime.now().add(Duration(minutes: 1));
-                          // }
-
                           if (validateReminderAdd()) {
                             context.read<RemindersCubit>().addNewReminder(
                                   Reminder(
