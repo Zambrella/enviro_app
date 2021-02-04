@@ -117,17 +117,17 @@ class FuelTypeIntensityTable extends StatelessWidget {
 
   // Easier to edit the data when it's in a map
   final rows = const <String, int>{
-    'Biomass': 120,
-    'Coal': 937,
-    'Gas (Combined Cycle)': 394,
     'Gas (Open Cycle)': 951,
-    'Hydro': 0,
-    'Nuclear': 0,
+    'Coal': 937,
     'Oil': 935,
+    'Gas (Combined Cycle)': 394,
     'Other': 300,
-    'Pumped Storage': 0,
+    'Biomass': 120,
     'Solar': 0,
     'Wind': 0,
+    'Hydro': 0,
+    'Nuclear': 0,
+    'Pumped Storage': 0,
   };
 
   @override
